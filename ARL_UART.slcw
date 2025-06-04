@@ -1,0 +1,6 @@
+---
+label: "ARL_UART"
+project:
+- id: "main"
+  path: "NAVCOM_Functionality_Testing.slcp"
+  output: "."
