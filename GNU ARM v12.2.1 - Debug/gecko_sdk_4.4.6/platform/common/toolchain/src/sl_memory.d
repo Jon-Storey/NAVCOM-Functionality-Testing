@@ -71,7 +71,7 @@ gecko_sdk_4.4.6/platform/common/toolchain/src/sl_memory.o: \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_pins.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_memory.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_memory_region.h \
- C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\config/sl_memory_config.h
+ C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/sl_memory_config.h
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
@@ -143,4 +143,4 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\silico
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_pins.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_memory.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_memory_region.h:
-C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\config/sl_memory_config.h:
+C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/sl_memory_config.h:

@@ -78,8 +78,8 @@ autogen/sl_event_handler.o: ../autogen/sl_event_handler.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core_generic.h \
- C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\autogen/sl_component_catalog.h \
- C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\config/emlib_core_debug_config.h \
+ C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h \
+ C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/emlib_core_debug_config.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\device_init\inc\sl_device_init_nvic.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_status.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\device_init\inc\sl_device_init_clocks.h \
@@ -163,8 +163,8 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core_generic.h:
-C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\autogen/sl_component_catalog.h:
-C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\config/emlib_core_debug_config.h:
+C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h:
+C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/emlib_core_debug_config.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\device_init\inc\sl_device_init_nvic.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_status.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\device_init\inc\sl_device_init_clocks.h:

@@ -22,10 +22,27 @@ enum destination
 };
 
 
+enum power_state
+{
+  On,
+  Off
+};
+
+
+
+enum node_mode_state
+{
+  Flight,
+  Deck,
+  Safe,
+  Service
+};
+
 
 typedef struct
 {
-  char EthernetSwitch;
+  int NodeMode;
+  char EthernetSwitchEnable;
   char FCPU_Disable;
   char Reg_3V3_Enable;
   char PL_V1_Disable;
@@ -33,9 +50,9 @@ typedef struct
   char RS232_A_Shutdown;
   char RS232_B_Shutdown;
   char Expander_A_Shutdown;
-//  char Expander_B_Shutdown = 0;
-//  char Expander_B_Shutdown = 0;
-} NodeStuff;
+  char Expander_B_Shutdown;
+  char Expander_C_Shutdown;
+} NodeConfiguration;
 
 
 #endif /* DEFINES_H_ */

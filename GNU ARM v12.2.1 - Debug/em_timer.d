@@ -1,7 +1,7 @@
 em_timer.o: \
  C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2/platform/emlib/src/em_timer.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h \
- C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART/em_timer.h \
+ C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing/em_timer.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\cmsis\core\include\core_cm4.h \
@@ -72,7 +72,7 @@ em_timer.o: \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_pins.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h:
-C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART/em_timer.h:
+C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing/em_timer.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\cmsis\core\include\core_cm4.h:

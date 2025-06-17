@@ -77,8 +77,8 @@ gecko_sdk_4.4.6/platform/emlib/src/em_emu.o: \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core_generic.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_common.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h \
- C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\autogen/sl_component_catalog.h \
- C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\config/emlib_core_debug_config.h \
+ C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h \
+ C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/emlib_core_debug_config.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu_compat.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h \
@@ -166,8 +166,8 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core_generic.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_common.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h:
-C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\autogen/sl_component_catalog.h:
-C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\ARL_UART\config/emlib_core_debug_config.h:
+C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h:
+C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/emlib_core_debug_config.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu_compat.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h:
