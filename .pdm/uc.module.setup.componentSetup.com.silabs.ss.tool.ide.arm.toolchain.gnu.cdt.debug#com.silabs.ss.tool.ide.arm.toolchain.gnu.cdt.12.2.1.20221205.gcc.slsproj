@@ -127,6 +127,7 @@
           <file name="em_core_generic.h" uri="studio:/sdk/platform/emlib/inc/em_core_generic.h"/>
           <file name="em_emu.h" uri="studio:/sdk/platform/emlib/inc/em_emu.h"/>
           <file name="em_gpio.h" uri="studio:/sdk/platform/emlib/inc/em_gpio.h"/>
+          <file name="em_i2c.h" uri="studio:/sdk/platform/emlib/inc/em_i2c.h"/>
           <file name="em_msc.h" uri="studio:/sdk/platform/emlib/inc/em_msc.h"/>
           <file name="em_msc_compat.h" uri="studio:/sdk/platform/emlib/inc/em_msc_compat.h"/>
           <file name="em_system.h" uri="studio:/sdk/platform/emlib/inc/em_system.h"/>
@@ -137,6 +138,7 @@
           <file name="em_core.c" uri="studio:/sdk/platform/emlib/src/em_core.c"/>
           <file name="em_emu.c" uri="studio:/sdk/platform/emlib/src/em_emu.c"/>
           <file name="em_gpio.c" uri="studio:/sdk/platform/emlib/src/em_gpio.c"/>
+          <file name="em_i2c.c" uri="studio:/sdk/platform/emlib/src/em_i2c.c"/>
           <file name="em_msc.c" uri="studio:/sdk/platform/emlib/src/em_msc.c"/>
           <file name="em_system.c" uri="studio:/sdk/platform/emlib/src/em_system.c"/>
         </folder>

@@ -1,4 +1,4 @@
-main.o: ../main.c \
+initialisation.o: ../initialisation.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h \
  C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\system\inc\sl_system_init.h \

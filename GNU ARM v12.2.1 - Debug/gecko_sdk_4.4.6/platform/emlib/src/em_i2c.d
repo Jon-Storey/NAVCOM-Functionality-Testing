@@ -1,8 +1,7 @@
-main.o: ../main.c \
+gecko_sdk_4.4.6/platform/emlib/src/em_i2c.o: \
+ C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2/platform/emlib/src/em_i2c.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h \
- C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\system\inc\sl_system_init.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\system\inc\sl_system_process_action.h \
+ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_i2c.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\cmsis\core\include\core_cm4.h \
@@ -78,27 +77,16 @@ main.o: ../main.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core_generic.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_common.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h \
+ C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h \
  C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/emlib_core_debug_config.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu_compat.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_enum.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_status.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\sli_em_cmu.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_usart.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_chip.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_system.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_system_generic.h \
- ../em_timer.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_i2c.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_emu.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h \
- ../sw_delay.h ../hw_timer.h ../usart.h ../buzzer.h ../defines.h ../i2c.h \
- ../helpers.h ../menu.h ../initialisation.h
+ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_bus.h
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h:
-C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\system\inc\sl_system_init.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\system\inc\sl_system_process_action.h:
+c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_i2c.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\cmsis\core\include\core_cm4.h:
@@ -174,27 +162,11 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core_generic.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_common.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h:
+C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h:
 C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/emlib_core_debug_config.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu_compat.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_enum.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_status.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\sli_em_cmu.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_usart.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_chip.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_system.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_system_generic.h:
-../em_timer.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_i2c.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_emu.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
-../sw_delay.h:
-../hw_timer.h:
-../usart.h:
-../buzzer.h:
-../defines.h:
-../i2c.h:
-../helpers.h:
-../menu.h:
-../initialisation.h:
+c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_bus.h:
