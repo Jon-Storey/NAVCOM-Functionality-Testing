@@ -35,6 +35,21 @@ void Set_Expander_A_Power_State(char power_state, NodeConfiguration *NodeConfig)
 void Set_Expander_B_Power_State(char power_state, NodeConfiguration *NodeConfig);
 void Set_Expander_C_Power_State(char power_state, NodeConfiguration *NodeConfig);
 
+
+/*==============================================================================
+ * RESET CONTROL FUNCTIONS
+ * @brief Functions to control reset signal for subsystems
+ * @note Each function controls specific GPIO pins and updates NodeConfig flags
+ *============================================================================*/
+
+void Set_Ethernet_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
+void Set_SDAS_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
+void Set_PDEM_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
+void Set_FCPU_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
+void Set_IMU_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
+void Set_Antenna_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
+
+
 /*==============================================================================
  * NODE MANAGEMENT FUNCTIONS
  * @brief High-level node configuration and status functions
@@ -50,5 +65,13 @@ void clear_screen(void);
 void binaryToAsciiString(uint8_t value, char *asciiStr);
 void binaryToAsciiHex(uint8_t value, char *asciiStr);
 void USART_Test_Cycle(void);
+
+
+
+
+
+
+
+
 
 #endif /* HELPERS_H_ */

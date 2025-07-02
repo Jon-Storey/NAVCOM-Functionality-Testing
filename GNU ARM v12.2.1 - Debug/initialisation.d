@@ -93,8 +93,8 @@ initialisation.o: ../initialisation.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_i2c.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_emu.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h \
- ../sw_delay.h ../hw_timer.h ../usart.h ../buzzer.h ../defines.h ../i2c.h \
- ../helpers.h ../menu.h ../initialisation.h
+ ../hw_timer.h ../usart.h ../buzzer.h ../defines.h ../i2c.h ../helpers.h \
+ ../menu.h ../initialisation.h
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h:
 C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\service\system\inc\sl_system_init.h:
@@ -189,7 +189,6 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_i2c.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_emu.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
-../sw_delay.h:
 ../hw_timer.h:
 ../usart.h:
 ../buzzer.h:

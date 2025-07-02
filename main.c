@@ -33,7 +33,7 @@
 #include "em_gpio.h"
 #include "EFM32GG11B420F2048GQ100.h"
 
-#include "sw_delay.h"
+//#include "sw_delay.h"
 #include "hw_timer.h"
 #include "usart.h"
 #include "buzzer.h"
@@ -45,12 +45,12 @@
 
 
 
-NodeConfiguration NodeConfig = {'0','0','0','0','0','0','0','0', '0', '0','0'};
+NodeConfiguration NodeConfig = {'0','0','0','0','0','0','0','0', '0', '0','0','0','0','0','0','0'};
 
 
 int main(void)
 {
-  Initialise_Node();
+  Initialise_Node();                //instigate full initialisation process
   NodeConfiguration *pNodeConfig;   //create NodConfig ptr
   pNodeConfig = &NodeConfig;        // point it a NodeConfig STructure
 

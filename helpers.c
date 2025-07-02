@@ -21,7 +21,7 @@
 #include "em_emu.h"
 #include "em_gpio.h"
 #include "EFM32GG11B420F2048GQ100.h"
-#include "sw_delay.h"
+//#include "sw_delay.h"
 #include "hw_timer.h"
 #include "usart.h"
 #include "buzzer.h"
@@ -477,6 +477,139 @@ void Set_3V_Power_State(char power_state, NodeConfiguration *NodeConfig)
 
   }
 }
+
+
+
+
+
+
+
+
+void Set_Ethernet_Reset_State(char reset_state, NodeConfiguration *NodeConfig)
+{
+  switch (reset_state)
+   {
+        case On:
+          GPIO_PinOutSet(gpioPortF ,12);
+          print_string("Ethernet Reset active \n\r", Node);
+          NodeConfig->EthernetSwitchReset = '1';
+        break;
+
+        case Off:
+          GPIO_PinOutClear(gpioPortF ,12);
+          print_string("Ethernet reset  deactiveated \n\r", Node);
+          NodeConfig->EthernetSwitchReset = '0';
+        break;
+
+      default:
+   }
+}
+
+
+void Set_SDAS_Reset_State(char reset_state, NodeConfiguration *NodeConfig)
+{
+  switch (reset_state)
+   {
+        case On:
+          GPIO_PinOutSet(gpioPortC ,1);
+          print_string("SDAS Reset active \n\r", Node);
+          NodeConfig->SDAS_Reset = '1';
+        break;
+
+        case Off:
+          GPIO_PinOutClear(gpioPortC ,1);
+          print_string("SDAS deactiveated \n\r", Node);
+          NodeConfig->SDAS_Reset = '0';
+        break;
+
+      default:
+   }
+}
+
+
+
+void Set_PDEM_Reset_State(char reset_state, NodeConfiguration *NodeConfig)
+{
+  switch (reset_state)
+   {
+        case On:
+          GPIO_PinOutSet(gpioPortA ,11);
+          print_string("PDEM Reset active \n\r", Node);
+          NodeConfig->PDEM_Reset = '1';
+        break;
+
+        case Off:
+          GPIO_PinOutClear(gpioPortA ,11);
+          print_string("PDEM deactiveated \n\r", Node);
+          NodeConfig->PDEM_Reset = '0';
+        break;
+
+      default:
+   }
+}
+
+
+void Set_FCPU_Reset_State(char reset_state, NodeConfiguration *NodeConfig)
+{
+  switch (reset_state)
+   {
+        case On:
+          GPIO_PinOutSet(gpioPortC ,7);
+          print_string("PDEM Reset active \n\r", Node);
+          NodeConfig->FCPU_Reset = '1';
+        break;
+
+        case Off:
+          GPIO_PinOutClear(gpioPortC ,7);
+          print_string("FCPU reset deactiveated \n\r", Node);
+          NodeConfig->FCPU_Reset = '0';
+        break;
+
+      default:
+   }
+}
+
+void Set_IMU_Reset_State(char reset_state, NodeConfiguration *NodeConfig)
+{
+  switch (reset_state)
+   {
+        case On:
+          GPIO_PinOutSet(gpioPortC ,9);
+          print_string("IMU Reset active \n\r", Node);
+          NodeConfig->IMU_Reset = '1';
+        break;
+
+        case Off:
+          GPIO_PinOutClear(gpioPortC ,9);
+          print_string("IMU reset deactiveated \n\r", Node);
+          NodeConfig->IMU_Reset = '0';
+        break;
+
+      default:
+   }
+}
+
+
+void Set_Antenna_Reset_State(char reset_state, NodeConfiguration *NodeConfig)
+{
+  switch (reset_state)
+   {
+        case On:
+          GPIO_PinOutSet(gpioPortB ,6);
+          print_string("Antenna Reset active \n\r", Node);
+          NodeConfig->Antenna_Reset = '1';
+        break;
+
+        case Off:
+          GPIO_PinOutClear(gpioPortB ,6);
+          print_string("Antenna reset deactiveated \n\r", Node);
+          NodeConfig->Antenna_Reset = '0';
+        break;
+
+      default:
+   }
+}
+
 
 
 

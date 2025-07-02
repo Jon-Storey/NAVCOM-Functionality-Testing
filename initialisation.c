@@ -34,7 +34,7 @@
 #include "em_emu.h"
 #include "EFM32GG11B420F2048GQ100.h"
 
-#include "sw_delay.h"
+//#include "sw_delay.h"
 #include "hw_timer.h"
 #include "usart.h"
 #include "buzzer.h"
@@ -89,8 +89,8 @@
  */
 void Initialise_Node(void)
 {
-    // Initialise chip-level hardware
-    CHIP_Init();
+
+    CHIP_Init();                                // Initialise chip-level hardware
 
     /*==========================================================================
      * CLOCK TREE CONFIGURATION
@@ -114,7 +114,6 @@ void Initialise_Node(void)
      * COMMUNICATION INTERFACE GPIO CONFIGURATION
      * Configure pins for all USART and UART interfaces
      *========================================================================*/
-
     // IMU - USART0 LOC2 with RS485 control
     GPIO_PinModeSet(gpioPortC, 10, gpioModeInput, 0);       // RX
     GPIO_PinModeSet(gpioPortC, 11, gpioModePushPull, 1);    // TX
@@ -154,8 +153,8 @@ void Initialise_Node(void)
     /*==========================================================================
      * POWER CONTROL GPIO CONFIGURATION
      * Configure power control pins and set safe default states (all OFF)
+     * See "Set_xxx_Power_State" functions for application use
      *========================================================================*/
-
     // RS232 Interface Power Control
     GPIO_PinModeSet(gpioPortA, 4, gpioModePushPull, 1);     // RS232_A_SHDN
     GPIO_PinOutClear(gpioPortA, 4);                         // Initialize OFF
@@ -182,6 +181,77 @@ void Initialise_Node(void)
 
     GPIO_PinModeSet(gpioPortD, 4, gpioModePushPull, 1);     // Expander C Reset
     GPIO_PinOutClear(gpioPortD, 4);                         // Initialize OFF
+
+
+    /*==========================================================================
+     * RESET SIGNALS CONFIGURATION
+     * Configure reset signal IO -
+     * see 'Set_xxx_Reset_State' functions for application use
+     *========================================================================*/
+    GPIO_PinModeSet(gpioPortF, 12, gpioModePushPull, 1);     // Ethernet Reset
+    GPIO_PinOutClear(gpioPortF, 12);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortC, 1, gpioModePushPull, 1);     // SDAS Reset
+    GPIO_PinOutClear(gpioPortC, 1);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortA, 11, gpioModePushPull, 1);     // PDEM Reset
+    GPIO_PinOutClear(gpioPortA, 11);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortC, 7, gpioModePushPull, 1);     // FCPU Reset
+    GPIO_PinOutClear(gpioPortC, 7);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortC, 9, gpioModePushPull, 1);     // IMU Reset
+    GPIO_PinOutClear(gpioPortC, 9);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortB, 6, gpioModePushPull, 1);     // Antenna Reset
+    GPIO_PinOutClear(gpioPortB, 6);                         // Initialize OFF
+
+    /*==========================================================================
+     * SPI CHIP SELECT CONFIGURATION
+     * Configure CS signals for SPI devices
+     *========================================================================*/
+    GPIO_PinModeSet(gpioPortA, 10, gpioModePushPull, 1);     // Ethernet SPI CS
+    GPIO_PinOutClear(gpioPortA, 10);
+
+    GPIO_PinModeSet(gpioPortA, 9, gpioModePushPull, 1);     // USART A CS
+    GPIO_PinOutClear(gpioPortA, 9);
+
+    GPIO_PinModeSet(gpioPortA, 8, gpioModePushPull, 1);     // USART B CS
+    GPIO_PinOutClear(gpioPortA, 8);
+
+    GPIO_PinModeSet(gpioPortA, 7, gpioModePushPull, 1);     // USART C CS
+    GPIO_PinOutClear(gpioPortA, 7);
+
+
+
+    /*==========================================================================
+     * PAYLOAD AND SENSOR CADDY DIRECT GPIO CONFIGURATION
+     * Configure payload directly connected GPIOs (some GPIO derived from expanders)
+     *========================================================================*/
+    GPIO_PinModeSet(gpioPortB, 10, gpioModePushPull, 1);     // PLA GPIO 0
+    GPIO_PinOutClear(gpioPortB, 10);                        // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortB, 9, gpioModePushPull, 1);     // PLA GPIO 1
+    GPIO_PinOutClear(gpioPortB, 9);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortA, 14, gpioModePushPull, 1);    // PLB GPIO 0
+    GPIO_PinOutClear(gpioPortA, 14);                        // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortB, 13, gpioModePushPull, 1);    // PLB GPIO 1
+    GPIO_PinOutClear(gpioPortB, 13);                        // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortA, 12, gpioModePushPull, 1);    // PLC GPIO 0
+    GPIO_PinOutClear(gpioPortA, 12);                        // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortB, 5, gpioModePushPull, 1);     // PLD GPIO 0
+    GPIO_PinOutClear(gpioPortB, 5);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortF, 11, gpioModePushPull, 1);    // Sensor Caddy GPIO 0
+    GPIO_PinOutClear(gpioPortF, 11);                        // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortF, 10, gpioModePushPull, 1);     // Sensor Caddy GPIO 1
+    GPIO_PinOutClear(gpioPortF, 10);                         // Initialize OFF
+
 
     // System Feedback
     GPIO_PinModeSet(gpioPortC, 2, gpioModePushPull, 1);     // Buzzer Control

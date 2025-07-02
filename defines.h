@@ -78,6 +78,7 @@ typedef enum {
  *============================================================================*/
 typedef struct {
     int NodeMode;                   ///< Current operating mode (from node_mode_state_t)
+// subsystem enable signals
     char EthernetSwitchEnable;      ///< Ethernet switch state (GPIO Port E, Pin 10)
     char FCPU_Disable;              ///< 5V/FCPU power state (GPIO Port A, Pin 15)
     char Reg_3V3_Enable;            ///< 3.3V regulator state (GPIO Port B, Pin 2)
@@ -88,6 +89,14 @@ typedef struct {
     char Expander_A_Shutdown;       ///< Expander A module state (GPIO Port D, Pin 2)
     char Expander_B_Shutdown;       ///< Expander B module state (GPIO Port D, Pin 3)
     char Expander_C_Shutdown;       ///< Expander C module state (GPIO Port D, Pin 4)
+// Reset signals
+    char EthernetSwitchReset;       ///< Ethernet switch state (GPIO Port F, Pin 12)
+    char SDAS_Reset;                ///< SDAS Reset state (GPIO Port C, Pin 1)
+    char PDEM_Reset;                ///< PDEM Reset state (GPIO Port A, Pin 11)
+    char FCPU_Reset;                ///< FCPU Reset state (GPIO Port C, Pin 7)
+    char IMU_Reset;                 ///< IMU Reset state (GPIO Port A, Pin 11)
+    char Antenna_Reset;             ///< Antenna Reset state (GPIO Port B, Pin 6)
+
 } NodeConfiguration;
 
 /*==============================================================================
@@ -112,5 +121,20 @@ typedef enum {
     I2C_STATE_ERROR,                ///< Error occurred during transaction
     I2C_STATE_WAITSTOP              ///< Waiting for stop condition completion
 } I2C_State_t;
+
+
+
+/*==============================================================================
+ * MENU STATE MANAGEMENT
+ *============================================================================*/
+typedef enum {
+    MENU_MAIN,
+    MENU_POWER,
+    MENU_NODE_MODES,
+    MENU_I2C_OPS,
+    MENU_COMMUNICATION,
+    MENU_SYSTEM_INFO
+} menu_state_t;
+
 
 #endif /* DEFINES_H_ */

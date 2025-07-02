@@ -14,7 +14,7 @@
 #include "em_i2c.h"
 #include "em_emu.h"
 #include "EFM32GG11B420F2048GQ100.h"
-#include "sw_delay.h"
+//#include "sw_delay.h"
 #include "hw_timer.h"
 #include "usart.h"
 #include "buzzer.h"

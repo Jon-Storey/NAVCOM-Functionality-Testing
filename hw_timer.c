@@ -12,7 +12,7 @@
 #include "em_usart.h"
 #include "em_chip.h"
 #include "EFM32GG11B420F2048GQ100.h"
-#include "sw_delay.h"
+//#include "sw_delay.h"
 #include "em_timer.h"
 #include "hw_timer.h"
 #include "defines.h"

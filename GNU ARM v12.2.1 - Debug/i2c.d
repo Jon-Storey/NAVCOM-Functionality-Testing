@@ -91,7 +91,7 @@ i2c.o: ../i2c.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_i2c.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_emu.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h \
- ../sw_delay.h ../hw_timer.h ../usart.h ../buzzer.h ../defines.h ../i2c.h
+ ../hw_timer.h ../usart.h ../buzzer.h ../defines.h ../i2c.h
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
@@ -184,7 +184,6 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_i2c.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_emu.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
-../sw_delay.h:
 ../hw_timer.h:
 ../usart.h:
 ../buzzer.h:

@@ -71,18 +71,6 @@
 #include "i2c.h"
 #include "menu.h"
 
-/*==============================================================================
- * MENU STATE MANAGEMENT
- *============================================================================*/
-typedef enum {
-    MENU_MAIN,
-    MENU_POWER,
-    MENU_NODE_MODES,
-    MENU_I2C_OPS,
-    MENU_COMMUNICATION,
-    MENU_SYSTEM_INFO
-} menu_state_t;
-
 static menu_state_t current_menu = MENU_MAIN;
 static char input_buffer[32];
 static uint8_t buffer_index = 0;
@@ -308,7 +296,7 @@ void handle_power_menu(char input)
             Set_Expander_C_Power_State(NodeConfig.Expander_C_Shutdown ? On : Off, &NodeConfig);
             break;
         case '9':
-            emergency_shutdown();
+     //       emergency_shutdown();
             break;
         case '0':
             current_menu = MENU_MAIN;
@@ -410,7 +398,7 @@ void handle_i2c_menu(char input)
             print_string("\r\nCustom register read not implemented yet.\r\n", Node);
             break;
         case '5':
-            print_string("\r\nI2C Status: ");
+            print_string("\r\nI2C Status: ", Node);
             if(i2cIsTransferDone())
                 print_string("Ready\r\n", Node);
             else
@@ -559,7 +547,7 @@ void emergency_shutdown(void)
 void i2c_bus_scan(void)
 {
     print_string("I2C bus scan: 0x00 to 0x7F\r\n", Node);
-    print_string("Devices found: ");
+    print_string("Devices found: ", Node);
 
     // This would need to be implemented based on your I2C functions
     print_string("0x19, 0x31\r\n", Node);
