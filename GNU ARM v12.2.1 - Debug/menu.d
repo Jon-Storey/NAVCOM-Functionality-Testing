@@ -70,7 +70,8 @@ menu.o: ../menu.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_uart.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_ports.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_pins.h \
- ../i2c.h ../menu.h
+ ../i2c.h ../menu.h ../ethernet_switch.h ../hw_timer.h \
+ ../usart_expanders.h
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h:
 ../defines.h:
 ../helpers.h:
@@ -146,3 +147,6 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\silico
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_pins.h:
 ../i2c.h:
 ../menu.h:
+../ethernet_switch.h:
+../hw_timer.h:
+../usart_expanders.h:

@@ -19,6 +19,10 @@
 #ifndef DEFINES_H_
 #define DEFINES_H_
 
+#include <stdint.h>
+#include <stdbool.h>
+
+
 /*==============================================================================
  * SYSTEM CONSTANTS
  *============================================================================*/
@@ -30,6 +34,7 @@
  *============================================================================*/
 extern char buffer[BUFFER_SIZE];    ///< General purpose communication buffer
 extern char asciiStr[4];            ///< ASCII conversion buffer (max uint8_t = 255 → 3 digits + null)
+
 
 /*==============================================================================
  * COMMUNICATION DESTINATION ENUMERATION
@@ -54,6 +59,17 @@ typedef enum {
     Off = 0,                        ///< Power OFF state
     On = 1                          ///< Power ON state
 } power_state_t;
+
+
+
+/*==============================================================================
+ * SELECTED STATE ENUMERATION
+ * @brief Defines ON/OFF states for CS control functions
+ *============================================================================*/
+typedef enum {
+    Deselected = 0,                        ///< Power OFF state
+    Selected = 1                          ///< Power ON state
+} CS_state_t;
 
 /*==============================================================================
  * NODE OPERATING MODE ENUMERATION
@@ -96,6 +112,17 @@ typedef struct {
     char FCPU_Reset;                ///< FCPU Reset state (GPIO Port C, Pin 7)
     char IMU_Reset;                 ///< IMU Reset state (GPIO Port A, Pin 11)
     char Antenna_Reset;             ///< Antenna Reset state (GPIO Port B, Pin 6)
+// GPIO signals
+    char FCPU_GPIO_0;
+    char Sensor_Caddy_GPIO_0;
+    char Sensor_Caddy_GPIO_1;
+    char PLA_GPIO_0;
+    char PLA_GPIO_1;
+    char PLB_GPIO_0;
+    char PLB_GPIO_1;
+    char PLC_GPIO_0;
+    char PLD_GPIO_0;
+    char PLE_GPIO_0;
 
 } NodeConfiguration;
 
@@ -133,8 +160,27 @@ typedef enum {
     MENU_NODE_MODES,
     MENU_I2C_OPS,
     MENU_COMMUNICATION,
-    MENU_SYSTEM_INFO
+    MENU_SYSTEM_INFO,
+    MENU_TEST
 } menu_state_t;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #endif /* DEFINES_H_ */

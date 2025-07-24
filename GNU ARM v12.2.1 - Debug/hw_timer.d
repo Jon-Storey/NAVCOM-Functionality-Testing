@@ -87,7 +87,6 @@ hw_timer.o: ../hw_timer.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_chip.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_system.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_system_generic.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h \
  ../em_timer.h ../hw_timer.h ../defines.h
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h:
@@ -177,7 +176,6 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_chip.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_system.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_system_generic.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
 ../em_timer.h:
 ../hw_timer.h:
 ../defines.h:

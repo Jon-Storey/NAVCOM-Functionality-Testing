@@ -34,7 +34,9 @@ void Set_Ethernet_Switch_Power_State(char power_state, NodeConfiguration *NodeCo
 void Set_Expander_A_Power_State(char power_state, NodeConfiguration *NodeConfig);
 void Set_Expander_B_Power_State(char power_state, NodeConfiguration *NodeConfig);
 void Set_Expander_C_Power_State(char power_state, NodeConfiguration *NodeConfig);
-
+void Set_PHY_Power_State(char power_state, NodeConfiguration *NodeConfig);
+void Set_PLV1_Power_State(char power_state, NodeConfiguration *NodeConfig);
+void Set_PLV2_Power_State(char power_state, NodeConfiguration *NodeConfig);
 
 /*==============================================================================
  * RESET CONTROL FUNCTIONS
@@ -42,13 +44,45 @@ void Set_Expander_C_Power_State(char power_state, NodeConfiguration *NodeConfig)
  * @note Each function controls specific GPIO pins and updates NodeConfig flags
  *============================================================================*/
 
-void Set_Ethernet_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
+void Set_Ethernet_Switch_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
 void Set_SDAS_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
 void Set_PDEM_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
 void Set_FCPU_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
 void Set_IMU_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
 void Set_Antenna_Reset_State(char reset_state, NodeConfiguration *NodeConfig);
 
+
+
+void Set_FCPU_SPI_MOSI_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_FCPU_SPI_MISO_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_FCPU_SPI_CLK_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_FCPU_SPI_CS_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_FCPU_Disable_State(char GPIO_state, NodeConfiguration *NodeConfig);
+
+/*==============================================================================
+ * CHIP SELECT CONNTROL FUNCTIONS
+ * @brief Functions to control CS signal for subsystems
+ * @note Each function controls specific GPIO pins and updates NodeConfig flags
+ *============================================================================*/
+void Set_Expander_A_CS_State(char CS_state);
+void Set_Expander_B_CS_State(char CS_state);
+void Set_Expander_C_CS_State(char CS_state);
+
+
+/*==============================================================================
+ * GPIO CONTROL FUNCTIONS
+ * @brief
+ *============================================================================*/
+void Set_FCPU_GPIO_0_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_SENSOR_CADDY_GPIO_0_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_SENSOR_CADDY_GPIO_1_State(char GPIO_state,NodeConfiguration *NodeConfig);
+void Set_PLA_GPIO_0_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_PLA_GPIO_1_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_PLB_GPIO_0_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_PLB_GPIO_1_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_PLC_GPIO_0_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_PLD_GPIO_0_State(char GPIO_state, NodeConfiguration *NodeConfig);
+void Set_PLE_GPIO_0_State(char GPIO_state, NodeConfiguration *NodeConfig);
 
 /*==============================================================================
  * NODE MANAGEMENT FUNCTIONS

@@ -42,23 +42,144 @@
 #include "helpers.h"
 #include "menu.h"
 #include "initialisation.h"
+#include "ethernet_switch.h"
+#include "usart_expanders.h"
 
 
 
-NodeConfiguration NodeConfig = {'0','0','0','0','0','0','0','0', '0', '0','0','0','0','0','0','0'};
+NodeConfiguration NodeConfig = {
+    .NodeMode = Flight,              // Use enum value, not character
+    .EthernetSwitchEnable = 0,     // use char for bool values (not '0' ascii)
+    .FCPU_Disable = 0,
+    .Reg_3V3_Enable = 0,
+    .PL_V1_Disable = 0,
+    .PL_V2_Disable = 0,
+    .RS232_A_Shutdown = 0,
+    .RS232_B_Shutdown = 0,
+    .Expander_A_Shutdown = 0,
+    .Expander_B_Shutdown = 0,
+    .Expander_C_Shutdown = 0,
+    .EthernetSwitchReset = 0,       ///< Ethernet switch state (GPIO Port F, Pin 12)
+    .SDAS_Reset = 0,                ///< SDAS Reset state (GPIO Port C, Pin 1)
+    .PDEM_Reset = 0,                ///< PDEM Reset state (GPIO Port A, Pin 11)
+    .FCPU_Reset = 0,                ///< FCPU Reset state (GPIO Port C, Pin 7)
+    .IMU_Reset = 0,                 ///< IMU Reset state (GPIO Port A, Pin 11)
+    .Antenna_Reset = 0,             ///< Antenna Reset state (GPIO Port B, Pin 6)
+    .FCPU_GPIO_0 = 0,
+    .Sensor_Caddy_GPIO_0 = 0,
+    .Sensor_Caddy_GPIO_1 = 0,
+    .PLA_GPIO_0 = 0,
+    .PLA_GPIO_1 = 0,
+    .PLB_GPIO_0 = 0,
+    .PLB_GPIO_1 = 0,
+    .PLC_GPIO_0 = 0,
+    .PLD_GPIO_0 = 0,
+    .PLE_GPIO_0 = 0
 
+};
 
 int main(void)
 {
   Initialise_Node();                //instigate full initialisation process
+
   NodeConfiguration *pNodeConfig;   //create NodConfig ptr
   pNodeConfig = &NodeConfig;        // point it a NodeConfig STructure
 
+  Set_5V_Power_State(On, pNodeConfig);
+  hw_timer1_ms(100);
+  Set_3V_Power_State(On, pNodeConfig);
+  hw_timer1_ms(100);
+  print_string("on.\n\r", Node);
+
+
+  Set_Expander_A_Power_State(On, pNodeConfig );         //turn on all expanders, power required for high z state
+  Set_Expander_B_Power_State(On, pNodeConfig );
+  Set_Expander_C_Power_State(On, pNodeConfig );
+
+  Set_Expander_A_CS_State(Deselected);
+  Set_Expander_B_CS_State(Deselected);
+  Set_Expander_C_CS_State(Deselected);                  // deselect the two unused expanders
+
+
+ // Set_Ethernet_Switch_Power_State(On, pNodeConfig );
+
+  GPIO_PinOutSet(gpioPortD, 3);                           // Pull reset high EXP3 = uSART b = pin 49 on efm
+  GPIO_PinOutSet(gpioPortD, 2);                           // Pull reset high usart A
+  GPIO_PinOutSet(gpioPortD, 4);
+
+  Set_RS232_A_Power_State(On, pNodeConfig);
+  Set_RS232_B_Power_State(On, pNodeConfig);
+
+  hw_timer1_ms(100);
+
+  MAX14830_UART_Init(EXPANDER_A);
+  MAX14830_UART_Init(EXPANDER_B);
+  MAX14830_UART_Init(EXPANDER_C);
+
+
+
+//  hw_timer1_ms(100);
+
+  while(1)
+    {
+      hw_timer1_ms(100);
+     MAX14830_UART1_SendString("fuck it");
+      print_string("x", Node);
+    }
+
+  char input = 0;
+
+  while(1)
+         {
+           GPIO_PinOutSet(gpioPortC, 4);                           // deselect pin
+           GPIO_PinOutSet(gpioPortB, 7);                           // deselect pin
+           GPIO_PinOutSet(gpioPortB, 8);                           // deselect pin
+           hw_timer1_ms(1);
+           GPIO_PinOutClear(gpioPortC, 4);
+           GPIO_PinOutClear(gpioPortB, 7);
+           GPIO_PinOutClear(gpioPortB, 8);
+           hw_timer1_ms(1);
+         }
+
+
+
+  while(1)
+    {
+      GPIO_PinOutSet(gpioPortC, 4);                           // deselect pin
+      GPIO_PinOutSet(gpioPortB, 7);                           // deselect pin
+      GPIO_PinOutSet(gpioPortB, 8);                           // deselect pin
+      hw_timer1_ms(100);
+      GPIO_PinOutClear(gpioPortC, 4);
+      GPIO_PinOutClear(gpioPortB, 7);
+      GPIO_PinOutClear(gpioPortB, 8);
+      hw_timer1_ms(100);
+    }
+
+
+
+
+  menu_init();
+ // input = USART_ReceiveChar(Node);
+ // menu_process_input(input);
+  //handle_main_menu(input);
+
+
+
+
   while(1)
   {
-      Set_Node_Mode (Flight, pNodeConfig );
+      input = USART_ReceiveChar(USART2);
+      menu_process_input(input, pNodeConfig);
+      print_node_modestate(pNodeConfig);
+
    }
 }
+
+
+  // Send a character
+
+
+
 
 
 /*

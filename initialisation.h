@@ -9,5 +9,7 @@
 #define INITILISATION_H_
 
 void Initialise_Node(void);
+void NAVCOM_init(void);
+
 
 #endif /* INITILISATION_H_ */

@@ -99,6 +99,8 @@ void Initialise_Node(void)
     CMU_ClockEnable(cmuClock_HFPER, true);      // High Frequency Peripheral Clock
     CMU_ClockEnable(cmuClock_GPIO, true);       // GPIO clock
     CMU_ClockEnable(cmuClock_I2C0, true);       // I2C Clock
+ // CMU_ClockEnable(cmuClock_TIMER0, true);     // set up in the timer init function
+ // CMU_ClockEnable(cmuClock_TIMER1, true);
 
     // USART and UART clocks
     CMU_ClockEnable(cmuClock_USART0, true);     // IMU interface
@@ -134,9 +136,23 @@ void Initialise_Node(void)
     GPIO_PinModeSet(gpioPortE, 4, gpioModePushPull, 1);     // RS485 RTS control
 
     // Expander - USART4 LOC0 (SPI mode)
-    GPIO_PinModeSet(gpioPortB, 8, gpioModeInput, 0);        // MISO
-    GPIO_PinModeSet(gpioPortB, 7, gpioModePushPull, 1);     // MOSI
-    GPIO_PinModeSet(gpioPortC, 4, gpioModePushPull, 1);     // CLK
+    // GPIO_PinModeSet(gpioPortB, 8, gpioModePushPull, 1);     // MISo - change to inpout later
+    GPIO_PinModeSet(gpioPortB, 8, gpioModeWiredAndAlternatePullUpFilter, 1);        // MISO
+    GPIO_PinModeSet(gpioPortB, 7, gpioModePushPullAlternate, 1);     // MOSI
+    GPIO_PinModeSet(gpioPortC, 4, gpioModePushPullAlternate, 1);     // CLK
+
+    GPIO_DriveStrengthSet(gpioPortC, gpioDriveStrengthWeakAlternateWeak);
+    GPIO_DriveStrengthSet(gpioPortB, gpioDriveStrengthWeakAlternateWeak);
+
+    GPIO_PinModeSet(gpioPortA, 10, gpioModePushPull, 1);     // Ethernet SPI CS, active low
+    GPIO_PinOutSet(gpioPortA, 10);                           // deselect pin
+// use when reseting the Ethernet switch to stop SPI lines from interfering with boot strap mode
+  //  GPIO_PinModeSet(gpioPortB, 8, gpioModeInputPull, 1);     // MISO
+  //  GPIO_PinModeSet(gpioPortB, 7, gpioModeInput, 0);         // MOSI
+  //  GPIO_PinModeSet(gpioPortC, 4, gpioModeInputPull, 1);     // CLK
+
+    GPIO_PinModeSet(gpioPortE, 9, gpioModeInput, 0);      // Ethernet interrupt! Input (don't drive this!)
+
 
     // SDAS - USART5 LOC1/2 (mixed locations)
     GPIO_PinModeSet(gpioPortB, 1, gpioModeInput, 0);        // RX (LOC2)
@@ -149,6 +165,21 @@ void Initialise_Node(void)
     // USBL - UART1 LOC3
     GPIO_PinModeSet(gpioPortE, 3, gpioModeInput, 0);        // RX
     GPIO_PinModeSet(gpioPortE, 2, gpioModePushPull, 1);     // TX
+
+
+    // FCPU
+    GPIO_PinModeSet(gpioPortA, 1, gpioModePushPull, 1);     // FCPU  MOSI
+    GPIO_PinOutClear(gpioPortA, 1);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortA, 2, gpioModePushPull, 1);     // FCPU  MISO
+    GPIO_PinOutClear(gpioPortA, 2);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortA, 3, gpioModePushPull, 1);     //  FCPU  CLK
+    GPIO_PinOutClear(gpioPortA, 3);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortA, 15, gpioModePushPull, 1);     //  FCPU  Disable
+    GPIO_PinOutClear(gpioPortA, 15);                         // Initialize OFF
+
 
     /*==========================================================================
      * POWER CONTROL GPIO CONFIGURATION
@@ -169,18 +200,15 @@ void Initialise_Node(void)
     GPIO_PinModeSet(gpioPortA, 15, gpioModePushPull, 1);    // FCPU 5V Disable
     GPIO_PinOutClear(gpioPortA, 15);                        // Initialize OFF
 
-    GPIO_PinModeSet(gpioPortE, 10, gpioModePushPull, 1);    // Ethernet Switch
-    GPIO_PinOutClear(gpioPortE, 10);                        // Initialize OFF
+    GPIO_PinModeSet(gpioPortE, 10, gpioModePushPull, 1);     // Ethernet PWDWN
+    GPIO_PinOutClear(gpioPortE, 10);                         // Initialize OFF
 
-    // Expander Module Power Control
-    GPIO_PinModeSet(gpioPortD, 2, gpioModePushPull, 1);     // Expander A Reset
-    GPIO_PinOutClear(gpioPortD, 2);                         // Initialize OFF
+    GPIO_PinModeSet(gpioPortE, 15, gpioModePushPull, 1);     // PL V1 PWDWN
+    GPIO_PinOutClear(gpioPortE, 15);                         // Initialize OFF
 
-    GPIO_PinModeSet(gpioPortD, 3, gpioModePushPull, 1);     // Expander B Reset
-    GPIO_PinOutClear(gpioPortD, 3);                         // Initialize OFF
 
-    GPIO_PinModeSet(gpioPortD, 4, gpioModePushPull, 1);     // Expander C Reset
-    GPIO_PinOutClear(gpioPortD, 4);                         // Initialize OFF
+    GPIO_PinModeSet(gpioPortE, 14, gpioModePushPull, 1);     // PL V2 PWDWN
+    GPIO_PinOutClear(gpioPortE, 14);                         // Initialize OFF
 
 
     /*==========================================================================
@@ -188,8 +216,12 @@ void Initialise_Node(void)
      * Configure reset signal IO -
      * see 'Set_xxx_Reset_State' functions for application use
      *========================================================================*/
-    GPIO_PinModeSet(gpioPortF, 12, gpioModePushPull, 1);     // Ethernet Reset
+    GPIO_PinModeSet(gpioPortF, 12, gpioModePushPull, 1);     // Ethernet PHY Reset
     GPIO_PinOutClear(gpioPortF, 12);                         // Initialize OFF
+
+    GPIO_PinModeSet(gpioPortE, 8, gpioModePushPull, 1);     // Ethernet RESET
+    GPIO_PinOutClear(gpioPortE, 8);                         // Initialize reset ! active low
+
 
     GPIO_PinModeSet(gpioPortC, 1, gpioModePushPull, 1);     // SDAS Reset
     GPIO_PinOutClear(gpioPortC, 1);                         // Initialize OFF
@@ -197,7 +229,7 @@ void Initialise_Node(void)
     GPIO_PinModeSet(gpioPortA, 11, gpioModePushPull, 1);     // PDEM Reset
     GPIO_PinOutClear(gpioPortA, 11);                         // Initialize OFF
 
-    GPIO_PinModeSet(gpioPortC, 7, gpioModePushPull, 1);     // FCPU Reset
+    GPIO_PinModeSet(gpioPortC, 7, gpioModePushPull, 1);     // FCPU Reset - checked
     GPIO_PinOutClear(gpioPortC, 7);                         // Initialize OFF
 
     GPIO_PinModeSet(gpioPortC, 9, gpioModePushPull, 1);     // IMU Reset
@@ -206,22 +238,42 @@ void Initialise_Node(void)
     GPIO_PinModeSet(gpioPortB, 6, gpioModePushPull, 1);     // Antenna Reset
     GPIO_PinOutClear(gpioPortB, 6);                         // Initialize OFF
 
+
+
+    GPIO_PinModeSet(gpioPortD, 2, gpioModePushPull, 1);     // USART EX A Reset
+    GPIO_PinOutClear(gpioPortD, 2);                           // Initialize OFF - active low
+
+    GPIO_PinModeSet(gpioPortD, 3, gpioModePushPull, 1);     // USART Ex B Reset
+    GPIO_PinOutClear(gpioPortD, 3);                           // Initialize OFF - active low
+
+    GPIO_PinModeSet(gpioPortD, 4, gpioModePushPull, 1);     // USART EX C Reset
+    GPIO_PinOutClear(gpioPortD, 4);                           // Initialize OFF  - active low
+
+    GPIO_DriveStrengthSet(gpioPortD, gpioDriveStrengthWeakAlternateWeak);
+
+
     /*==========================================================================
      * SPI CHIP SELECT CONFIGURATION
      * Configure CS signals for SPI devices
      *========================================================================*/
-    GPIO_PinModeSet(gpioPortA, 10, gpioModePushPull, 1);     // Ethernet SPI CS
-    GPIO_PinOutClear(gpioPortA, 10);
 
-    GPIO_PinModeSet(gpioPortA, 9, gpioModePushPull, 1);     // USART A CS
-    GPIO_PinOutClear(gpioPortA, 9);
+    GPIO_DriveStrengthSet(gpioPortA, gpioDriveStrengthWeakAlternateWeak);
+
+
+    GPIO_PinModeSet(gpioPortA, 9, gpioModePushPull, 1);     // USART A CS   - active low so set high
+    GPIO_PinOutSet(gpioPortA, 9);
 
     GPIO_PinModeSet(gpioPortA, 8, gpioModePushPull, 1);     // USART B CS
-    GPIO_PinOutClear(gpioPortA, 8);
+    GPIO_PinOutSet(gpioPortA, 8);
 
     GPIO_PinModeSet(gpioPortA, 7, gpioModePushPull, 1);     // USART C CS
-    GPIO_PinOutClear(gpioPortA, 7);
+    GPIO_PinOutSet(gpioPortA, 7);
 
+    GPIO_PinModeSet(gpioPortA, 10, gpioModePushPull, 1);     // Ethernet switch CS
+    GPIO_PinOutSet(gpioPortA, 10);
+
+    GPIO_PinModeSet(gpioPortA, 0, gpioModePushPull, 1);     // FCPU CS - nonUART
+    GPIO_PinOutSet(gpioPortA, 0);
 
 
     /*==========================================================================
@@ -252,18 +304,63 @@ void Initialise_Node(void)
     GPIO_PinModeSet(gpioPortF, 10, gpioModePushPull, 1);     // Sensor Caddy GPIO 1
     GPIO_PinOutClear(gpioPortF, 10);                         // Initialize OFF
 
+    GPIO_PinModeSet(gpioPortD, 5, gpioModePushPull, 1);     // FCPU GPIO
+    GPIO_PinOutClear(gpioPortD, 5);                         // Initialize OFF
+
+
 
     // System Feedback
     GPIO_PinModeSet(gpioPortC, 2, gpioModePushPull, 1);     // Buzzer Control
     GPIO_PinOutClear(gpioPortC, 2);                         // Initialize OFF
 
+
+    /*==========================================================================
+     * ISR GPIO SETUP
+     * Initialize ISR pins
+     *========================================================================*/
+
+
+    GPIO_PinModeSet(gpioPortC, 5, gpioModeInput, 0);     // USART EXPANDER ISR
+    //GPIO_PinOutSet(gpioPortC, 5);                           // ignore this for now
+
+
+
     /*==========================================================================
      * PERIPHERAL INITIALIZATION
      * Initialize configured peripherals
      *========================================================================*/
-    setupTimer0();          // Hardware timer initialization
-    usart_init();           // All USART/UART interfaces
-    initI2C();              // I2C interface for sensor communication
+    setupTimer0();          // Hardware timer initialization for uS control
+    setupTimer1();          // Hardware timer initialization for mS control
 
+    usart_init();           // All USART/UART interfaces
+   // initI2C();              // I2C interface for sensor communication
+ //   MAX14830_Init();
     // System is now ready for operation
 }
+
+
+
+
+void NAVCOM_init(void)
+{
+  print_string("\r\nInitilising NAVCOM components\r\n", Node);
+
+  print_string("\r\nInitilising Ethernet switch\r\n", Node);
+
+  print_string("\r\nInitilising UART Expanders\r\n", Node);
+
+}
+
+
+// Is it better to seperate the initlisations into peripherals
+
+/**
+ * @brief Initialize USART4 for SPI communication with MAX14830
+ */
+//void MAX14830_SPI_Init(void)
+//{
+//}
+
+
+
+

@@ -70,9 +70,13 @@
 #include "usart.h"
 #include "i2c.h"
 #include "menu.h"
+#include "ethernet_switch.h"
+#include "hw_timer.h"
+#include "usart_expanders.h"
+
 
 static menu_state_t current_menu = MENU_MAIN;
-static char input_buffer[32];
+//static char input_buffer[32];
 static uint8_t buffer_index = 0;
 
 /*==============================================================================
@@ -96,6 +100,7 @@ void display_main_menu(void)
     print_string("3. I2C Operations\r\n", Node);
     print_string("4. Communication Tests\r\n", Node);
     print_string("5. System Information\r\n", Node);
+    print_string("6. Test\r\n", Node);
     print_string("0. System Status Display\r\n", Node);
     print_string("\r\n", Node);
     print_string("Select option (1-5, 0 for status): ", Node);
@@ -115,7 +120,7 @@ void display_power_menu(void)
     print_string("3. Toggle Ethernet Switch\r\n", Node);
     print_string("\r\n", Node);
     print_string("Communication Interfaces:\r\n", Node);
-    print_string("4. Toggle RS232 Interface A\r\n", Node);
+    print_string("4. Enet reset  A\r\n", Node);
     print_string("5. Toggle RS232 Interface B\r\n", Node);
     print_string("\r\n", Node);
     print_string("Expansion Modules:\r\n", Node);
@@ -210,6 +215,20 @@ void display_system_info_menu(void)
     print_string("Select option: ", Node);
 }
 
+void display_test_menu(void)
+{
+    clear_screen();
+    print_string("\r\n=== TEST ===\r\n", Node);
+    print_string("\r\n", Node);
+    print_string("1. Turn on Ethernet switch\r\n", Node);
+
+    print_string("\r\n", Node);
+    print_string("0. Back to Main Menu\r\n", Node);
+    print_string("\r\n", Node);
+    print_string("Select option: ", Node);
+}
+
+
 /*==============================================================================
  * MENU HANDLER FUNCTIONS
  *============================================================================*/
@@ -218,7 +237,7 @@ void display_system_info_menu(void)
  * @brief Handles main menu input selection
  * @param input: Character input from user
  */
-void handle_main_menu(char input)
+void handle_main_menu(char input, NodeConfiguration *NodeConfig)
 {
     switch(input)
     {
@@ -242,10 +261,17 @@ void handle_main_menu(char input)
             current_menu = MENU_SYSTEM_INFO;
             display_system_info_menu();
             break;
+
+        case '6':
+            current_menu = MENU_TEST;
+            display_test_menu();
+            break;
+
+
         case '0':
             clear_screen();
             print_string("\r\n=== CURRENT SYSTEM STATUS ===\r\n", Node);
-            print_node_modestate(&NodeConfig);
+            print_node_modestate(NodeConfig);
             print_string("\r\nPress any key to return to menu...", Node);
             break;
         default:
@@ -259,44 +285,58 @@ void handle_main_menu(char input)
  * @brief Handles power management menu input
  * @param input: Character input from user
  */
-void handle_power_menu(char input)
+void handle_power_menu(char input, NodeConfiguration *NodeConfig)
 {
     switch(input)
     {
         case '1':
-            NodeConfig.FCPU_Disable = !NodeConfig.FCPU_Disable;                   //toggle the flag
-            Set_5V_Power_State(NodeConfig.FCPU_Disable ? On : Off, &NodeConfig);  //short hand for ... IF NodeConfig is true, then 'On' else 'Off'
+          print_string("\r\n pressed 1 \n\r\n\r", Node);
+            NodeConfig->FCPU_Disable = !NodeConfig->FCPU_Disable;                   //toggle the flag
+            Set_5V_Power_State(NodeConfig->FCPU_Disable ? On : Off, NodeConfig);  //short hand for ... IF NodeConfig is true, then 'On' else 'Off'
             break;
         case '2':
-            NodeConfig.Reg_3V3_Enable = !NodeConfig.Reg_3V3_Enable;
-            Set_3V_Power_State(NodeConfig.Reg_3V3_Enable ? On : Off, &NodeConfig);
+            NodeConfig->Reg_3V3_Enable = !NodeConfig->Reg_3V3_Enable;
+            Set_3V_Power_State(NodeConfig->Reg_3V3_Enable ? On : Off, NodeConfig);
             break;
         case '3':
-            NodeConfig.EthernetSwitchEnable = !NodeConfig.EthernetSwitchEnable;
-            Set_Ethernet_Switch_Power_State(NodeConfig.EthernetSwitchEnable ? On : Off, &NodeConfig);
+           // NodeConfig->EthernetSwitchEnable = !NodeConfig->EthernetSwitchEnable;
+           // Set_Ethernet_Switch_Power_State(NodeConfig->EthernetSwitchEnable ? On : Off, NodeConfig);
+
+            ESwitch_Reset_Sequence(NodeConfig);
             break;
+
+
         case '4':
-            NodeConfig.RS232_A_Shutdown = !NodeConfig.RS232_A_Shutdown;
-            Set_RS232_A_Power_State(NodeConfig.RS232_A_Shutdown ? On : Off, &NodeConfig);
+                NodeConfig->EthernetSwitchReset = !NodeConfig->EthernetSwitchReset;
+                Set_Ethernet_Reset_State(NodeConfig->EthernetSwitchReset ? On : Off, NodeConfig);
+
+         //   NodeConfig->RS232_A_Shutdown = !NodeConfig->RS232_A_Shutdown;
+         //   Set_RS232_A_Power_State(NodeConfig->RS232_A_Shutdown ? On : Off, NodeConfig);
             break;
         case '5':
-            NodeConfig.RS232_B_Shutdown = !NodeConfig.RS232_B_Shutdown;
-            Set_RS232_B_Power_State(NodeConfig.RS232_B_Shutdown ? On : Off, &NodeConfig);
+            NodeConfig->RS232_B_Shutdown = !NodeConfig->RS232_B_Shutdown;
+            Set_RS232_B_Power_State(NodeConfig->RS232_B_Shutdown ? On : Off, NodeConfig);
             break;
         case '6':
-            NodeConfig.Expander_A_Shutdown = !NodeConfig.Expander_A_Shutdown;
-            Set_Expander_A_Power_State(NodeConfig.Expander_A_Shutdown ? On : Off, &NodeConfig);
+            NodeConfig->Expander_A_Shutdown = !NodeConfig->Expander_A_Shutdown;
+            Set_Expander_A_Power_State(NodeConfig->Expander_A_Shutdown ? On : Off, NodeConfig);
             break;
         case '7':
-            NodeConfig.Expander_B_Shutdown = !NodeConfig.Expander_B_Shutdown;
-            Set_Expander_B_Power_State(NodeConfig.Expander_B_Shutdown ? On : Off, &NodeConfig);
+            //NodeConfig->Expander_B_Shutdown = !NodeConfig->Expander_B_Shutdown;
+            //Set_Expander_B_Power_State(NodeConfig->Expander_B_Shutdown ? On : Off, NodeConfig);
+          Set_Expander_B_Power_State(Off, NodeConfig);
+          print_string("\r\n on", Node);
+          hw_timer1_ms(20)  ;
+      //    MAX14830_UART_Init();
+          print_string("\r\n Init", Node);
+          hw_timer1_ms(20)  ;
             break;
         case '8':
-            NodeConfig.Expander_C_Shutdown = !NodeConfig.Expander_C_Shutdown;
-            Set_Expander_C_Power_State(NodeConfig.Expander_C_Shutdown ? On : Off, &NodeConfig);
+            NodeConfig->Expander_C_Shutdown = !NodeConfig->Expander_C_Shutdown;
+            Set_Expander_C_Power_State(NodeConfig->Expander_C_Shutdown ? On : Off, NodeConfig);
             break;
         case '9':
-     //       emergency_shutdown();
+                MAX14830_UART1_SendChar('A');
             break;
         case '0':
             current_menu = MENU_MAIN;
@@ -317,36 +357,36 @@ void handle_power_menu(char input)
  * @brief Handles node modes menu input
  * @param input: Character input from user
  */
-void handle_node_modes_menu(char input)
+void handle_node_modes_menu(char input, NodeConfiguration *NodeConfig)
 {
     switch(input)
     {
         case '1':
-            Set_Node_Mode(Flight, &NodeConfig);
+            Set_Node_Mode(Flight, NodeConfig);
             print_string("\r\nFlight mode activated.\r\n", Node);
             break;
         case '2':
-            Set_Node_Mode(Deck, &NodeConfig);
+            Set_Node_Mode(Deck, NodeConfig);
             print_string("\r\nDeck mode activated.\r\n", Node);
             break;
         case '3':
-            Set_Node_Mode(Safe, &NodeConfig);
+            Set_Node_Mode(Safe, NodeConfig);
             print_string("\r\nSafe mode activated.\r\n", Node);
             break;
         case '4':
-            Set_Node_Mode(Service, &NodeConfig);
+            Set_Node_Mode(Service, NodeConfig);
             print_string("\r\nService mode activated.\r\n", Node);
             break;
         case '5':
-            Set_Node_Mode(Ethernet, &NodeConfig);
+            Set_Node_Mode(Ethernet, NodeConfig);
             print_string("\r\nEthernet mode activated.\r\n", Node);
             break;
         case '6':
-            Set_Node_Mode(RS232, &NodeConfig);
+            Set_Node_Mode(RS232, NodeConfig);
             print_string("\r\nRS232 mode activated.\r\n", Node);
             break;
         case '7':
-            Set_Node_Mode(Expanders, &NodeConfig);
+            Set_Node_Mode(Expanders, NodeConfig);
             print_string("\r\nExpanders mode activated.\r\n", Node);
             break;
         case '0':
@@ -368,7 +408,7 @@ void handle_node_modes_menu(char input)
  * @brief Handles I2C operations menu input
  * @param input: Character input from user
  */
-void handle_i2c_menu(char input)
+void handle_i2c_menu(char input, NodeConfiguration *NodeConfig)
 {
     uint8_t result;
     char hex_str[3];
@@ -423,7 +463,7 @@ void handle_i2c_menu(char input)
  * @brief Handles communication test menu input
  * @param input: Character input from user
  */
-void handle_communication_menu(char input)
+void handle_communication_menu(char input, NodeConfiguration *NodeConfig)
 {
     switch(input)
     {
@@ -470,14 +510,14 @@ void handle_communication_menu(char input)
  * @brief Handles system information menu input
  * @param input: Character input from user
  */
-void handle_system_info_menu(char input)
+void handle_system_info_menu(char input, NodeConfiguration *NodeConfig)
 {
     switch(input)
     {
         case '1':
             clear_screen();
             print_string("\r\n=== POWER STATUS ===\r\n", Node);
-            print_node_modestate(&NodeConfig);
+            print_node_modestate(NodeConfig);
             break;
         case '2':
             print_string("\r\nGPIO Pin States:\r\n", Node);
@@ -518,6 +558,25 @@ void handle_system_info_menu(char input)
     }
 }
 
+
+
+
+void handle_test_menu(char input, NodeConfiguration *NodeConfig)
+{
+    switch(input)
+    {
+        case '1':
+            clear_screen();
+ //           Initialise_ESwitch(NodeConfig);
+            print_string("Ethernet swtich initialised", Node);
+            break;
+        case '0':
+             current_menu = MENU_MAIN;
+             display_main_menu();
+             return;
+
+    }
+}
 /*==============================================================================
  * UTILITY FUNCTIONS
  *============================================================================*/
@@ -572,7 +631,7 @@ void menu_init(void)
  * @brief Processes character input for menu navigation
  * @param input: Character received from USART
  */
-void menu_process_input(char input)
+void menu_process_input(char input, NodeConfiguration *NodeConfig)
 {
     // Echo the character back to terminal
     put_char(input, Node);
@@ -580,22 +639,23 @@ void menu_process_input(char input)
     switch(current_menu)
     {
         case MENU_MAIN:
-            handle_main_menu(input);
+            handle_main_menu(input, NodeConfig);
             break;
         case MENU_POWER:
-            handle_power_menu(input);
+           print_string("in menu process, power selected\r\n", Node);
+            handle_power_menu(input, NodeConfig);
             break;
         case MENU_NODE_MODES:
-            handle_node_modes_menu(input);
+            handle_node_modes_menu(input, NodeConfig);
             break;
         case MENU_I2C_OPS:
-            handle_i2c_menu(input);
+            handle_i2c_menu(input, NodeConfig);
             break;
         case MENU_COMMUNICATION:
-            handle_communication_menu(input);
+            handle_communication_menu(input, NodeConfig);
             break;
         case MENU_SYSTEM_INFO:
-            handle_system_info_menu(input);
+            handle_system_info_menu(input, NodeConfig);
             break;
         default:
             current_menu = MENU_MAIN;

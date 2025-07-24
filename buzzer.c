@@ -39,7 +39,7 @@ void buzz_sweep(void)
   {
       for(i = 0; i < sweep_step ; i++ )
       {
-          hw_timer0(sweep_start);
+  //        hw_timer0(sweep_start);
           GPIO_PinOutToggle(gpioPortC, 2);
       }
 
@@ -51,7 +51,7 @@ void buzz_one_second(void)
 {
   while(1)
   {
-      hw_timer0(delay);
+ //     hw_timer0(delay);
       GPIO_PinOutToggle(gpioPortC, 2);
   }
 }

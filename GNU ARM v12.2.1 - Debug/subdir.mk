@@ -7,37 +7,43 @@ C_SRCS += \
 ../buzzer.c \
 C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2/platform/emlib/src/em_timer.c \
 C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2/platform/emlib/src/em_usart.c \
+../ethernet_switch.c \
 ../helpers.c \
 ../hw_timer.c \
 ../i2c.c \
 ../initialisation.c \
 ../main.c \
 ../menu.c \
-../usart.c 
+../usart.c \
+../usart_expanders.c 
 
 OBJS += \
 ./buzzer.o \
 ./em_timer.o \
 ./em_usart.o \
+./ethernet_switch.o \
 ./helpers.o \
 ./hw_timer.o \
 ./i2c.o \
 ./initialisation.o \
 ./main.o \
 ./menu.o \
-./usart.o 
+./usart.o \
+./usart_expanders.o 
 
 C_DEPS += \
 ./buzzer.d \
 ./em_timer.d \
 ./em_usart.d \
+./ethernet_switch.d \
 ./helpers.d \
 ./hw_timer.d \
 ./i2c.d \
 ./initialisation.d \
 ./main.d \
 ./menu.d \
-./usart.d 
+./usart.d \
+./usart_expanders.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -59,6 +65,13 @@ em_usart.o: C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2/platform/e
 	@echo 'Building file: $<'
 	@echo 'Invoking: GNU ARM C Compiler'
 	arm-none-eabi-gcc -g -gdwarf-2 -mcpu=cortex-m4 -mthumb -std=c99 '-DDEBUG=1' '-DDEBUG_EFM=1' '-DEFM32GG11B420F2048GQ100=1' '-DSL_COMPONENT_CATALOG_PRESENT=1' -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config" -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen" -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/Device/SiliconLabs/EFM32GG11B/Include" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/CMSIS/Core/Include" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/service/device_init/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/emlib/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/common/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/common/toolchain/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/service/system/inc" -O0 -Wall -Wextra -mno-sched-prolog -fno-builtin -fomit-frame-pointer -ffunction-sections -fdata-sections -imacrossl_gcc_preinclude.h -mfpu=fpv4-sp-d16 -mfloat-abi=softfp --specs=nano.specs -c -fmessage-length=0 -MMD -MP -MF"em_usart.d" -MT"$@" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+ethernet_switch.o: ../ethernet_switch.c subdir.mk
+	@echo 'Building file: $<'
+	@echo 'Invoking: GNU ARM C Compiler'
+	arm-none-eabi-gcc -g -gdwarf-2 -mcpu=cortex-m4 -mthumb -std=c99 '-DDEBUG=1' '-DDEBUG_EFM=1' '-DEFM32GG11B420F2048GQ100=1' '-DSL_COMPONENT_CATALOG_PRESENT=1' -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config" -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen" -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/Device/SiliconLabs/EFM32GG11B/Include" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/CMSIS/Core/Include" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/service/device_init/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/emlib/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/common/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/common/toolchain/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/service/system/inc" -O0 -Wall -Wextra -mno-sched-prolog -fno-builtin -fomit-frame-pointer -ffunction-sections -fdata-sections -imacrossl_gcc_preinclude.h -mfpu=fpv4-sp-d16 -mfloat-abi=softfp --specs=nano.specs -c -fmessage-length=0 -MMD -MP -MF"ethernet_switch.d" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
@@ -108,6 +121,13 @@ usart.o: ../usart.c subdir.mk
 	@echo 'Building file: $<'
 	@echo 'Invoking: GNU ARM C Compiler'
 	arm-none-eabi-gcc -g -gdwarf-2 -mcpu=cortex-m4 -mthumb -std=c99 '-DDEBUG=1' '-DDEBUG_EFM=1' '-DEFM32GG11B420F2048GQ100=1' '-DSL_COMPONENT_CATALOG_PRESENT=1' -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config" -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen" -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/Device/SiliconLabs/EFM32GG11B/Include" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/CMSIS/Core/Include" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/service/device_init/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/emlib/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/common/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/common/toolchain/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/service/system/inc" -O0 -Wall -Wextra -mno-sched-prolog -fno-builtin -fomit-frame-pointer -ffunction-sections -fdata-sections -imacrossl_gcc_preinclude.h -mfpu=fpv4-sp-d16 -mfloat-abi=softfp --specs=nano.specs -c -fmessage-length=0 -MMD -MP -MF"usart.d" -MT"$@" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+usart_expanders.o: ../usart_expanders.c subdir.mk
+	@echo 'Building file: $<'
+	@echo 'Invoking: GNU ARM C Compiler'
+	arm-none-eabi-gcc -g -gdwarf-2 -mcpu=cortex-m4 -mthumb -std=c99 '-DDEBUG=1' '-DDEBUG_EFM=1' '-DEFM32GG11B420F2048GQ100=1' '-DSL_COMPONENT_CATALOG_PRESENT=1' -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config" -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen" -I"C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/Device/SiliconLabs/EFM32GG11B/Include" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/CMSIS/Core/Include" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/service/device_init/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/emlib/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/common/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/common/toolchain/inc" -I"C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2//platform/service/system/inc" -O0 -Wall -Wextra -mno-sched-prolog -fno-builtin -fomit-frame-pointer -ffunction-sections -fdata-sections -imacrossl_gcc_preinclude.h -mfpu=fpv4-sp-d16 -mfloat-abi=softfp --specs=nano.specs -c -fmessage-length=0 -MMD -MP -MF"usart_expanders.d" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

@@ -39,10 +39,32 @@
   }
 
 
+#define SPI_MODE                                                                \
+  {                                                                             \
+    usartEnable,     /* Enable RX/TX when initialization is complete. */                     \
+    0,               /* Use current configured reference clock for configuring baud rate. */ \
+    500000,         /* 1 Mbits/s. */                                                        \
+    usartDatabits8,  /* 8 databits. */                                                       \
+    true,            /* Master mode. */                                                      \
+    true,           /* Send least significant bit first. */                                 \
+    usartClockMode0, /* Clock idle low, sample on rising edge. */                            \
+    false,           /* Not USART PRS input mode. */                                         \
+    0,               /* PRS channel 0. */                                                    \
+    false,           /* No AUTOTX mode. */                                                   \
+    false,           /* No AUTOCS mode. */                                                   \
+    false,           /* No CS invert. */                                                     \
+    0,               /* Auto CS Hold cycles. */                                              \
+    0                /* Auto CS Setup cycles. */                                             \
+  }
+
+
+
+
 void usart_init(void)
 {
 
   USART_InitAsync_TypeDef init = MODE;
+  USART_InitSync_TypeDef spiInit = SPI_MODE;  // SPI configuration
 
 
   //Initialize USART/UART asynchronous mode and route pins
@@ -62,9 +84,9 @@ void usart_init(void)
   USART3->ROUTELOC0 = USART_ROUTELOC0_RXLOC_LOC1 | USART_ROUTELOC0_TXLOC_LOC1;      //USART 3 - LOCATION 1 - THRUSTERS
   USART3->ROUTEPEN |= USART_ROUTEPEN_TXPEN | USART_ROUTEPEN_RXPEN;
 
-  USART_InitAsync(USART4, &init);
-  USART4->ROUTELOC0 = USART_ROUTELOC0_RXLOC_LOC0 | USART_ROUTELOC0_TXLOC_LOC0;      //USART 4 - LOCATION 0 - 3 USART EXPANDER -> payload A, B,C,D, E, Antenna, Ext pressure
-  USART4->ROUTEPEN |= USART_ROUTEPEN_TXPEN | USART_ROUTEPEN_RXPEN;                  //SPI
+  USART_InitSync(USART4, &spiInit);
+  USART4->ROUTELOC0 = USART_ROUTELOC0_RXLOC_LOC0 | USART_ROUTELOC0_TXLOC_LOC0 | USART_ROUTELOC0_CLKLOC_LOC0;      //USART 4 - LOCATION 0 - 3 USART EXPANDER -> payload A, B,C,D, E, Antenna, Ext pressure
+  USART4->ROUTEPEN |= USART_ROUTEPEN_TXPEN | USART_ROUTEPEN_RXPEN | USART_ROUTEPEN_CLKPEN;       //SPI. INCLUDES CLOCK LOCATION AND ROUTING.
 
   USART_InitAsync(USART5, &init);
   USART5->ROUTELOC0 = USART_ROUTELOC0_RXLOC_LOC2 | USART_ROUTELOC0_TXLOC_LOC1;      //USART 5 - LOCATION 2/1 - SDAS - checked working
@@ -79,6 +101,8 @@ void usart_init(void)
   UART1->ROUTEPEN = USART_ROUTEPEN_RXPEN | USART_ROUTEPEN_TXPEN;
 
 
+
+  USART_Enable(USART4, usartEnable);
   //Sensor caddy    I2C0 (Compass A, Internal pressure)
   //Compass B       I2C1
 }
@@ -87,21 +111,55 @@ void usart_init(void)
 
 
 
-
+/**
+ * @brief Transmits a single character to the specified destination device
+ *
+ * This function routes a character to one of the available communication interfaces
+ * based on the destination parameter. It provides a unified interface for character
+ * transmission across multiple UART/USART peripherals connected to different
+ * subsystems in the NAVCOM system.
+ *
+ * @param c           Character to transmit (8-bit ASCII character)
+ * @param destination Destination device identifier from the following options:
+ *                    - IMU:        Inertial Measurement Unit (USART0)
+ *                    - PDEM:       Power Distribution and Energy Management (USART1)
+ *                    - Node:       Navigation Node (USART2) [default destination]
+ *                    - Thrusters:  Thruster control system (USART3)
+ *                    - Expander:   UART expander interface (USART4)
+ *                    - SDAS:       Sensor Data Acquisition System (USART5)
+ *                    - FCPU:       Flight Computer (UART0)
+ *                    - USBL:       Ultra-Short Baseline positioning (UART1)
+ *
+ * @note This function is blocking and will wait until the character is transmitted
+ * @note Invalid destination values default to Node (USART2)
+ * @note Ensure the target USART/UART peripheral is properly initialized before use
+ *
+ * @warning No error checking is performed on the destination parameter
+ *
+ * @see USART_Tx() for low-level transmission details
+ * @see Communication interface definitions in system header files
+ *
+ * Example usage:
+ * @code
+ * put_char('A', IMU);        // Send 'A' to IMU
+ * put_char('\n', Node);      // Send newline to Node
+ * put_char('?', FCPU);       // Send '?' to Flight Computer
+ * @endcode
+ */
 void put_char(char c, int destination)
 {
   switch (destination)
   {
     case IMU:         USART_Tx(USART0, c);  break;
-    case PDEM:        USART_Tx(USART1, c);  break;        //
-    case Node:        USART_Tx(USART2, c);  break;        //
-    case Thrusters:   USART_Tx(USART3, c);  break;        //
-    case Expander:    USART_Tx(USART4, c);  break;        // spi
-    case SDAS:        USART_Tx(USART5, c);  break;        //
-    case FCPU:        USART_Tx (UART0, c);   break;
-    case USBL:        USART_Tx (UART1, c);   break;
+    case PDEM:        USART_Tx(USART1, c);  break;
+    case Node:        USART_Tx(USART2, c);  break;
+    case Thrusters:   USART_Tx(USART3, c);  break;
+    case Expander:    USART_Tx(USART4, c);  break;
+    case SDAS:        USART_Tx(USART5, c);  break;
+    case FCPU:        USART_Tx (UART0, c);  break;
+    case USBL:        USART_Tx (UART1, c);  break;
 
-    default:          USART_Tx(USART2, c);          //
+    default:          USART_Tx(USART2, c);
   }
 }
 
