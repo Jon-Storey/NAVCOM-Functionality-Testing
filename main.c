@@ -81,15 +81,36 @@ NodeConfiguration NodeConfig = {
 int main(void)
 {
   Initialise_Node();                //instigate full initialisation process
-
   NodeConfiguration *pNodeConfig;   //create NodConfig ptr
   pNodeConfig = &NodeConfig;        // point it a NodeConfig STructure
 
+
+     while(1)
+    {
+         init_menu_system();
+
+           print_string("\n\r=== NAVCOM Menu System ===\n\r", Node);
+           run_menu_system();
+     return 0;
+    }
+
+
+
+
+
+
+
+
+  //enable the core LDOs and drivers
   Set_5V_Power_State(On, pNodeConfig);
   hw_timer1_ms(100);
   Set_3V_Power_State(On, pNodeConfig);
   hw_timer1_ms(100);
-  print_string("on.\n\r", Node);
+  Set_RS232_A_Power_State(On, pNodeConfig);
+  Set_RS232_B_Power_State(On, pNodeConfig);
+
+
+
 
 
   Set_Expander_A_Power_State(On, pNodeConfig );         //turn on all expanders, power required for high z state
@@ -107,8 +128,7 @@ int main(void)
   GPIO_PinOutSet(gpioPortD, 2);                           // Pull reset high usart A
   GPIO_PinOutSet(gpioPortD, 4);
 
-  Set_RS232_A_Power_State(On, pNodeConfig);
-  Set_RS232_B_Power_State(On, pNodeConfig);
+
 
   hw_timer1_ms(100);
 

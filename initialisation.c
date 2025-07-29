@@ -147,9 +147,7 @@ void Initialise_Node(void)
     GPIO_PinModeSet(gpioPortA, 10, gpioModePushPull, 1);     // Ethernet SPI CS, active low
     GPIO_PinOutSet(gpioPortA, 10);                           // deselect pin
 // use when reseting the Ethernet switch to stop SPI lines from interfering with boot strap mode
-  //  GPIO_PinModeSet(gpioPortB, 8, gpioModeInputPull, 1);     // MISO
-  //  GPIO_PinModeSet(gpioPortB, 7, gpioModeInput, 0);         // MOSI
-  //  GPIO_PinModeSet(gpioPortC, 4, gpioModeInputPull, 1);     // CLK
+
 
     GPIO_PinModeSet(gpioPortE, 9, gpioModeInput, 0);      // Ethernet interrupt! Input (don't drive this!)
 
@@ -350,16 +348,6 @@ void NAVCOM_init(void)
   print_string("\r\nInitilising UART Expanders\r\n", Node);
 
 }
-
-
-// Is it better to seperate the initlisations into peripherals
-
-/**
- * @brief Initialize USART4 for SPI communication with MAX14830
- */
-//void MAX14830_SPI_Init(void)
-//{
-//}
 
 
 

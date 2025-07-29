@@ -559,7 +559,7 @@ void Set_RS232_A_Power_State(char power_state, NodeConfiguration *NodeConfig)
 
        case Off:                                     //if DCDC need switching ON
          GPIO_PinOutClear(gpioPortA,4);             //Enable the DCDC with GPIO
-         print_string("RS232 Disabled\n\r", Node);   //Print message to Terminal
+         print_string("RS232 A Disabled\n\r", Node);   //Print message to Terminal
          NodeConfig->RS232_A_Shutdown = 0;               //Update the NodeConfig structure
        break;
 
@@ -615,13 +615,13 @@ void Set_5V_Power_State(char power_state, NodeConfiguration *NodeConfig)
   {
       case On:                                    //if DCDC need switching ON
       GPIO_PinOutSet(gpioPortA ,15);              //Enable the DCDC with GPIO
-      print_string("FCPU Enabled \n\r", Node);    //Print message to Terminal
+      print_string("5V Enabled \n\r", Node);    //Print message to Terminal
       NodeConfig->FCPU_Disable=1   ;             //Update the NodeConfig structure
       break;
 
     case Off:                                     //if DCDC need switching ON
       GPIO_PinOutClear(gpioPortA ,15);            //Enable the DCDC with GPIO
-      print_string("FCPU Shutdown \n\r", Node);   //Print message to Terminal
+      print_string("5V Shutdown \n\r", Node);   //Print message to Terminal
       NodeConfig->FCPU_Disable=0;               //Update the NodeConfig structure
       break;
 

@@ -24,61 +24,112 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-void menu_input_system(void);
-void menu_output_system(char);
+
+#include <stdint.h>
 
 
 
-
-/*==============================================================================
- * MENU SYSTEM CONSTANTS
- *============================================================================*/
-
-/// Maximum length for input buffer
-#define MENU_INPUT_BUFFER_SIZE      32
-
-/// Menu timeout in milliseconds (0 = no timeout)
-#define MENU_TIMEOUT_MS             0
-
-void display_main_menu(void);
-void display_power_menu(void);
-void display_node_modes_menu(void);
-void display_i2c_menu(void);
-void display_communication_menu(void);
-void display_system_info_menu(void);
-void display_test_menu(void);
-
-
-void handle_main_menu(char input, NodeConfiguration *NodeConfig);
-void handle_power_menu(char input, NodeConfiguration *ANodeConfig);
-void handle_node_modes_menu(char input, NodeConfiguration *NodeConfig);
-void handle_i2c_menu(char input, NodeConfiguration *NodeConfig);
-void handle_communication_menu(char input, NodeConfiguration *NodeConfig);
-void handle_test_menu(char input, NodeConfiguration *NodeConfig);
-
-void menu_process_input(char input, NodeConfiguration *NodeConfig);
-
-void handle_system_info_menu(char input, NodeConfiguration *NodeConfig);
-void emergency_shutdown(void);
-void i2c_bus_scan(void);
-void menu_init(void);
-
-void menu_return_to_main(void);
+typedef struct
+{
+    const char *description;        // Pointer to string (no copying)
+    void (*function_ptr)(void);     // Function pointer
+} menu_item;
 
 
 
-/*==============================================================================
- * MENU INTEGRATION MACROS
- * @brief Convenient macros for menu system integration
- *============================================================================*/
+// Structure for menu list
+typedef struct
+{
+    const menu_item *items;         // Pointer to array of menu items
+    uint8_t count;                  // Number of items
+    const char *title;              // Menu title
+} menu_list;
 
-///// Quick menu initialisation macro
-//#define MENU_INIT()                 menu_init()
 
-/// Process input macro for main loop
-//#define MENU_PROCESS(ch)            menu_process_input(ch)
 
-///// Return to main menu macro
-//#define MENU_HOME()                 menu_return_to_main()
+// Structure for menu state
+typedef struct
+{
+    const menu_list *current_menu;  // Current active menu
+    uint8_t selected_index;         // Selected item index
+    uint8_t menu_level;             // 0 = main, 1 = submenu
+} menu_state;
+
+// Public function prototypes
+void init_menu_system(void);
+void run_menu_system(void);
+void print_menu(void);
+
+// Navigation functions
+void menu_up(void);
+void menu_down(void);
+void menu_select(void);
+void menu_back(void);
+
+
+// Utility functions
+void print_number(uint8_t num);
+char get_input(void);
+
+// Menu transition function prototypes
+void show_usbl_menu(void);
+void show_fcpu_menu(void);
+void show_imu_menu(void);
+void show_pdem_menu(void);
+void show_node_menu(void);
+void show_thruster_menu(void);
+void show_expander_menu(void);
+void show_sdas_menu(void);
+void show_random_menu(void);
+
+// USBL function prototypes
+void usbl_function_a(void);
+void usbl_function_b(void);
+void usbl_function_c(void);
+
+// FCPU function prototypes
+void fcpu_function_a(void);
+void fcpu_function_b(void);
+void fcpu_function_c(void);
+
+// IMU function prototypes
+void imu_function_a(void);
+void imu_function_b(void);
+void imu_function_c(void);
+
+// PDEM function prototypes
+void pdem_function_a(void);
+void pdem_function_b(void);
+void pdem_function_c(void);
+
+// NODE function prototypes
+void node_function_a(void);
+void node_function_b(void);
+void node_function_c(void);
+
+// THRUST function prototypes
+void thruster_function_a(void);
+void thruster_function_b(void);
+void thruster_function_c(void);
+
+// EXPANDER function prototypes
+void expander_function_a(void);
+void expander_function_b(void);
+void expander_function_c(void);
+
+// SDAS function prototypes
+void sdas_function_a(void);
+void sdas_function_b(void);
+void sdas_function_c(void);
+
+// RANDOM function prototypes
+void random_function_a(void);
+void random_function_b(void);
+void random_function_c(void);
+
+
+extern menu_state state;
+
+
 
 #endif /* MENU_H_ */
