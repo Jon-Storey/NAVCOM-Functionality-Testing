@@ -65,6 +65,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include "em_gpio.h"
+
 #include "defines.h"
 #include "helpers.h"
 #include "usart.h"
@@ -78,44 +80,31 @@
 #include <stdint.h>
 #include <string.h>
 #include "usart.h"
+#include "buzzer.h"
 
 
-// Global menu state
-menu_state state = {
+
+
+
+//=============================================================================
+// Menu Configuration
+//=============================================================================
+
+menu_state state = {           // Global menu state
         .current_menu =0,
         .menu_level =0,
         .selected_index = 0};
 
 
-//typedef struct
-//{
-//    const char *description;        // Pointer to string (no copying)
-//    void (*function_ptr)(void);     // Function pointer
-//} menu_item;
+                                                                                // Main menu items (static const - stored in ROM)
+static const menu_item main_items[] =                                           // this is an array main menu items.
+{                                                                               // it allows grouping of function onto new lists
+    {"USART Functions",        show_usart_menu, NULL  },                          // manually add item here, {description, *function pointer}
+    {"Ethernet Functions",     show_ethernet_menu, &NodeConfig} ,                           // update the manu_list details below
+    {"Expander Functions",     show_expander_menu, &NodeConfig} ,
+    {"Buzzer Functions",       show_buzzer_menu, NULL}                            // update the manu_list details below
 
 
-// Structure for menu list
-//typedef struct
-//{
-//    const menu_item *items;         // Pointer to array of menu items
-//    uint8_t count;                  // Number of items
-//    const char *title;              // Menu title
-//} menu_list;
-
-
-
-// Main menu items (static const - stored in ROM)
-static const menu_item main_items[] =       // this is an array main menu items.
-{                                           // it allows grouping of function onto new lists
-    {"USBL Functions",   show_usbl_menu},   // manually add item here, {description, *function pointer}
-    {"FCPU Functions",   show_fcpu_menu},   // update the manu_list details below
-    {"IMU Functions",    show_imu_menu},
-    {"PDEM Functions",   show_pdem_menu},
-    {"NODE Functions",   show_node_menu},
-    {"THRUSTER Functions", show_thruster_menu},
-    {"EXPANDER Functions",  show_expander_menu},
-    {"SDAS Functions",   show_sdas_menu},
-    {"Random Functions", show_random_menu}
 };
 
 
@@ -124,7 +113,7 @@ static const menu_item main_items[] =       // this is an array main menu items.
 static const menu_list main_menu =          // this is a MENU_LIST
 {                                           // it tells how mant items are on the list
     main_items,                             // pointer of type menu_items, pointing to array of main items
-    9,                                      // how many items in main menu
+    4,                                      // how many items in main menu
     "Main Menu"                             // list name
 };
 
@@ -134,125 +123,115 @@ static const menu_list main_menu =          // this is a MENU_LIST
 
 
 
-//=============================================================================
-// Menu Configuration
-//=============================================================================
-/**
- * @brief USBL submenu items array
- *
- * Static constant array containing menu items for USBL (Ultra-Short Baseline)
- * positioning system functions. Each item contains a description string and
- * function pointer for the corresponding USBL operation.
- *
- * @note Stored in ROM to conserve RAM on embedded system
- */
-static const menu_item usbl_items[] =
-{
-    {"USBL Function A", usbl_function_a},
-    {"USBL Function B", usbl_function_b},
-    {"USBL Function C", usbl_function_c}
-};
-
-static const menu_list usbl_menu =
-{
-    usbl_items,     // Pointer to menu items array
-    3,              // Number of items in menu
-    "USBL Functions" // Menu title displayed to user
-};
-
-
-
 
 //=============================================================================
-// FCPU Menu Configuration
+// Sub-Menu Configuration - USART
 //=============================================================================
-static const menu_item fcpu_items[] =
+static const menu_item usart_items[] =
 {
-    {"FCPU Function A", fcpu_function_a},
-    {"FCPU Function B", fcpu_function_b},
-    {"FCPU Function C", fcpu_function_c}
+    {"Enable all the DCDC and LDOS",    usart_function_a,     &NodeConfig},
+    {"USART loop all",                  usart_function_b,     &NodeConfig},
+    {"Send Hello to PLA1",              usart_function_c,     &NodeConfig}
+
+
 };
 
-static const menu_list fcpu_menu =
+static const menu_list usart_menu =
 {
-    fcpu_items,      // Pointer to menu items array
-    3,               // Number of items in menu
-    "FCPU Functions" // Menu title displayed to user
+    usart_items,     // Pointer to menu items array
+    7,              // Number of items in menu
+    "USART Functions" // Menu title displayed to user
 };
 
-
-
-//=============================================================================
-// IMU Menu Configuration
-//=============================================================================
-static const menu_item imu_items[] =
+void show_usart_menu(void)
 {
-    {"IMU Function A", imu_function_a},
-    {"IMU Function B", imu_function_b},
-    {"IMU Function C", imu_function_c}
-};
+    state.current_menu = &usart_menu;
+    state.selected_index = 0;
+    state.menu_level = 1;
+}
 
-static const menu_list imu_menu =
+// USART Functions
+void usart_function_a(void *param)
 {
-    imu_items,      // Pointer to menu items array
-    3,               // Number of items in menu
-    "IMU Functions" // Menu title displayed to user
-};
+  NodeConfiguration *pNodeConfig = (NodeConfiguration*)param;                   //lets this function point to Node config structure
+
+  Set_5V_Power_State(On, pNodeConfig);                                            //enable the core LDOs and drivers
+  hw_timer1_ms(1000);
+  Set_3V_Power_State(On, pNodeConfig);
+  hw_timer1_ms(1000);
+
+  Set_RS232_A_Power_State(On, pNodeConfig);                                       //REQURIED FOR RS232 COMMS
+  Set_RS232_B_Power_State(On, pNodeConfig);
+  hw_timer1_ms(1000);
+}
+
+void usart_function_b (void *param)
+{
+ // NodeConfiguration *pNodeConfig = (NodeConfiguration*)param;
+  print_string("PEntering infinite USART loop\n\r", Node);
+  hw_timer1_ms(1000);
+  USART_Test_Cycle();
+}
+
+void usart_function_c(void *param)
+{
+  NodeConfiguration *pNodeConfig = (NodeConfiguration*)param;
+  print_string("\n\r Add PDEM message here... \n\r", Node);
+  print_string("\n\r Add PDEM message here... \n\r", PDEM);
+}
 
 
 //=============================================================================
-// PDEM Menu Configuration
+// Ethernet Menu Configuration
 //=============================================================================
-static const menu_item pdem_items[] =
-{
-    {"IMU Function A", pdem_function_a},
-    {"IMU Function B", pdem_function_b},
-    {"IMU Function C", pdem_function_c}
-};
 
-static const menu_list pdem_menu =
+
+static const menu_item ethernet_items[] =
 {
-    pdem_items,      // Pointer to menu items array
-    3,               // Number of items in menu
-    "PDEM Functions" // Menu title displayed to user
+    {"Enable Switch  "  , ethernet_function_a     ,&NodeConfig}
+ //   {"Buzz tone"        , buzzer_function_b     ,&NodeConfig}
+
 };
 
 
-//=============================================================================
-// NODE Menu Configuration
-//=============================================================================
-static const menu_item node_items[] =
+static const menu_list ethernet_menu =
 {
-    {"Node Function A", node_function_a},
-    {"Node Function B", node_function_b},
-    {"Node Function C", node_function_c}
-};
-
-static const menu_list node_menu =
-{
-    node_items,      // Pointer to menu items array
-    3,               // Number of items in menu
-    "Node Functions" // Menu title displayed to user
+    ethernet_items,                                                             // Pointer to menu items array
+    1,                                                                          // Number of items in menu
+    "Ethernet Switch Functions"                                                 // Menu title displayed to user
 };
 
 
-
-//=============================================================================
-// Thrusters Menu Configuration
-//=============================================================================
-static const menu_item thruster_items[] =
+void show_ethernet_menu(void)
 {
-    {"Thruster Function A", thruster_function_a},
-    {"Thruster Function B", thruster_function_b},
-    {"Thruster Function C", thruster_function_c}
-};
+    state.current_menu = &ethernet_menu;
+    state.selected_index = 0;
+    state.menu_level = 1;
+}
 
-static const menu_list thruster_menu =
+
+
+// Ethernet Functions
+void ethernet_function_a(void *param)
 {
-    thruster_items,      // Pointer to menu items array
-    3,               // Number of items in menu
-    "Thruster Functions" // Menu title displayed to user
-};
+    NodeConfiguration *pNodeConfig = (NodeConfiguration*)param;
+
+    //REQURIED FOR ETHERNET SWITCH COMMS
+    Set_Ethernet_Switch_Power_State(Off, pNodeConfig);         // regardless of current situation, turn off power to the chip
+    hw_timer1_ms(100);                                          // wait for the chip to power down and settle
+    Set_Ethernet_Switch_Power_State(On, pNodeConfig);          // re-apply power to the chip
+    hw_timer1_ms(10);                                          // wait 5ms after powering on chip
+    Set_Ethernet_Switch_Reset_State(Off, pNodeConfig);                // Set Reset low, which resets chip
+    hw_timer1_ms(150);                                         // wait 15 ms with RESET low for warm reset
+    Set_Ethernet_Switch_Reset_State(On, pNodeConfig);                 // Set Reset high. Strap on values are read on the rising edge (includes a reading time)
+    hw_timer1_ms(150);
+
+   // Set_RS232_A_Power_State(On, pNodeConfig);
+   // Set_RS232_B_Power_State(On, pNodeConfig);
+    hw_timer1_ms(3000);
+
+
+}
 
 
 
@@ -260,57 +239,151 @@ static const menu_list thruster_menu =
 //=============================================================================
 // Expander Menu Configuration
 //=============================================================================
+
+
 static const menu_item expander_items[] =
 {
-    {"Expander Function A", expander_function_a},
-    {"Expander Function B", expander_function_b},
-    {"Expander Function C", expander_function_c}
+    {"Enable expanders  "  , expander_function_a     ,&NodeConfig},
+    {"send hello to PLA1"  , expander_function_b     ,&NodeConfig}
+
 };
+
 
 static const menu_list expander_menu =
 {
-    expander_items,      // Pointer to menu items array
-    3,               // Number of items in menu
-    "expander Functions" // Menu title displayed to user
+    expander_items,                                                             // Pointer to menu items array
+    2,                                                                          // Number of items in menu
+    "Expander Functions"                                                 // Menu title displayed to user
 };
+
+
+void show_expander_menu(void)
+{
+    state.current_menu = &expander_menu;
+    state.selected_index = 0;
+    state.menu_level = 1;
+}
+
+
+
+void expander_function_a(void *param)
+{
+
+  NodeConfiguration *pNodeConfig = (NodeConfiguration*)param;
+
+
+  Set_5V_Power_State(On, pNodeConfig);                                            //enable the core LDOs and drivers
+  hw_timer1_ms(1000);
+  Set_3V_Power_State(On, pNodeConfig);
+  hw_timer1_ms(1000);
+
+  Set_RS232_A_Power_State(On, pNodeConfig);                                       //REQURIED FOR RS232 COMMS
+  Set_RS232_B_Power_State(On, pNodeConfig);
+  hw_timer1_ms(1000);
+
+
+  Set_Expander_A_Power_State(On, pNodeConfig );                                 //turn on all expanders, power required for high z state! cant leave any off
+  Set_Expander_B_Power_State(On, pNodeConfig );
+  Set_Expander_C_Power_State(On, pNodeConfig );
+
+  Set_Expander_A_CS_State(Deselected);
+  Set_Expander_B_CS_State(Deselected);
+  Set_Expander_C_CS_State(Deselected);                                          // deselect the  expanders
+
+  GPIO_PinOutSet(gpioPortD, 3);                                                 // Pull reset high EXP3 = uSART b = pin 49 on efm
+  GPIO_PinOutSet(gpioPortD, 2);                                                 // Pull reset high usart A
+  GPIO_PinOutSet(gpioPortD, 4);                                                 // MAKE IONTO A HELPER FUNCTION FOR EASY READING
+
+  hw_timer1_ms(100);
+
+  MAX14830_UART_Init(EXPANDER_A);
+  MAX14830_UART_Init(EXPANDER_B);
+  MAX14830_UART_Init(EXPANDER_C);
+
+  hw_timer1_ms(100);
+
+  while(1)
+  {
+      hw_timer1_ms(10);
+      MAX14830_SendString(EXPANDER_A,  MAX14830_UART0, "Hello World");
+      print_string("x", Node);
+    }
+}
+
+
+void expander_function_b(void *param)
+{
+
+
+}
+
+
 
 
 
 //=============================================================================
-// Expander Menu Configuration
+// Buzzer Menu Configuration
 //=============================================================================
-static const menu_item random_items[] =
-{
-    {"Random Function A", random_function_a},
-    {"Random Function B", random_function_b},
-    {"Random Function C", random_function_c}
-};
 
-static const menu_list random_menu =
+
+static const menu_item buzzer_items[] =
 {
-    random_items,      // Pointer to menu items array
-    3,               // Number of items in menu
-    "Random Functions" // Menu title displayed to user
+    {"Sing happy song"  , buzzer_function_a     ,&NodeConfig},
+    {"Buzz tone"        , buzzer_function_b     ,&NodeConfig}
+
 };
 
 
-
-//=============================================================================
-// SDAS Menu Configuration
-//=============================================================================
-static const menu_item sdas_items[] =
+static const menu_list buzzer_menu =
 {
-    {"SDAS Function A", sdas_function_a},
-    {"SDAS Function B", sdas_function_b},
-    {"SDAS Function C", sdas_function_c}
+    buzzer_items,     // Pointer to menu items array
+    2,              // Number of items in menu
+    "Buzzer Functions" // Menu title displayed to user
 };
 
-static const menu_list sdas_menu =
+
+void show_buzzer_menu(void)
 {
-    sdas_items,
-    3,
-    "SDAS Functions"
-};
+    state.current_menu = &buzzer_menu;
+    state.selected_index = 0;
+    state.menu_level = 1;
+}
+
+// Buzzer Functions
+void buzzer_function_a(void *param)
+{
+    print_string("Buzzing a happy song\n\r", Node);
+    while (1)
+      {
+            // Play C major scale
+            buzzer_play_note(NOTE_C4, 1000);  // C for 500ms
+            buzzer_play_note(NOTE_OFF, 1000);  // 50ms pause
+            buzzer_play_note(NOTE_C5, 1000);  // C for 500ms
+            buzzer_play_note(NOTE_OFF, 1000);  // 50ms pause
+            buzzer_play_note(NOTE_C6, 1000);  // C for 500ms
+            buzzer_play_note(NOTE_OFF, 1000);  // 50ms pause
+            buzzer_play_note(NOTE_C7, 1000);  // C for 500ms
+            buzzer_play_note(NOTE_OFF, 1000);  // 50ms pause
+
+      }
+}
+
+void buzzer_function_b(void *param)
+{
+  print_string("\n\r Add USBL message here... \n\r", Node);
+  print_string("\n\r Add USBL message here... \n\r", USBL);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -326,6 +399,8 @@ void print_number(uint8_t num)
     }
     put_char('0' + (num % 10), Node);
 }
+
+
 
 // Display current menu
 void print_menu(void)
@@ -360,6 +435,28 @@ void print_menu(void)
 
 
 // Navigation functions
+
+
+
+
+// Get user input
+char get_input(void)
+{
+    return USART_ReceiveChar(USART2);
+}
+
+
+// Initialize menu system
+void init_menu_system(void)
+{
+    state.current_menu = &main_menu;
+    state.selected_index = 0;
+    state.menu_level = 0;
+}
+
+
+
+// Navigation functions
 void menu_up(void)
 {
     if (state.selected_index > 0)
@@ -379,8 +476,12 @@ void menu_down(void)
 void menu_select(void)
 {
     if (state.current_menu->items[state.selected_index].function_ptr != 0)
-      {
-        state.current_menu->items[state.selected_index].function_ptr();
+    {
+        // Get the menu item
+        const menu_item *item = &state.current_menu->items[state.selected_index];
+
+        // Call the function with its parameter
+        item->function_ptr(item->param);
     }
 }
 
@@ -395,86 +496,7 @@ void menu_back(void)
 }
 
 
-// Menu transition functions
-void show_usbl_menu(void)
-{
-    state.current_menu = &usbl_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
 
-void show_fcpu_menu(void)
-{
-    state.current_menu = &fcpu_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
-
-void show_imu_menu(void)
-{
-    state.current_menu = &imu_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
-
-void show_pdem_menu(void)
-{
-    state.current_menu = &pdem_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
-
-
-void show_node_menu(void)
-{
-    state.current_menu = &node_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
-
-void show_thruster_menu(void)
-{
-    state.current_menu = &thruster_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
-
-void show_expander_menu(void)
-{
-    state.current_menu = &expander_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
-
-void show_sdas_menu(void)
-{
-    state.current_menu = &sdas_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
-
-void show_random_menu(void)
-{
-    state.current_menu = &random_menu;
-    state.selected_index = 0;
-    state.menu_level = 1;
-}
-
-
-
-// Get user input
-char get_input(void)
-{
-    return USART_ReceiveChar(USART2);
-}
-
-// Initialize menu system
-void init_menu_system(void)
-{
-    state.current_menu = &main_menu;
-    state.selected_index = 0;
-    state.menu_level = 0;
-}
 
 
 
@@ -492,31 +514,11 @@ void run_menu_system(void)
 
         switch (input)
         {
-            case 'W':             menu_up();    break;
-            case 'S':             menu_down();  break;
-            case '\r': case '\n': menu_select(); break;
-            case 'B':             menu_back();  break;
+            case 'W':  case 'w':            menu_up();    break;
+            case 'S':  case 's':            menu_down();  break;
+            case '\r': case '\n':           menu_select(); break;
+            case 'B':  case 'b':            menu_back();  break;
 
-         /*
-            case '1':
-                state.selected_index = 0;
-                menu_select();
-                break;
-            case '2':
-                if (state.current_menu->count > 1)
-                  {
-                    state.selected_index = 1;
-                    menu_select();
-                }
-                break;
-            case '3':
-                if (state.current_menu->count > 2)
-                  {
-                    state.selected_index = 2;
-                    menu_select();
-                }
-                break;
-            */
             case '0':
                 menu_back();
                 break;
@@ -531,187 +533,3 @@ void run_menu_system(void)
 
 
 
-// USBL Functions
-void usbl_function_a(void)
-{
-    print_string("\n\rExecuting USBL Function A\n\r", USBL);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-void usbl_function_b(void)
-{
-    print_string("\n\rExecuting USBL Function B\n\r", USBL);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-void usbl_function_c(void)
-{
-    print_string("\n\rExecuting USBL Function C\n\r", USBL);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-
-// FCPU Functions
-void fcpu_function_a(void)
-{
-    print_string("\n\rExecuting FCPU Function A\n\r", FCPU);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void fcpu_function_b(void)
-{
-    print_string("\n\rExecuting FCPU Function B\n\r", FCPU);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void fcpu_function_c(void)
-{
-    print_string("\n\rExecuting FCPU Function C\n\r", FCPU);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-// IMU Functions
-void imu_function_a(void)
-{
-    print_string("\n\rExecuting IMU Function A\n\r", IMU);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void imu_function_b(void)
-{
-    print_string("\n\rExecuting IMU Function B\n\r", IMU);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void imu_function_c(void)
-{
-    print_string("\n\rExecuting IMU Function C\n\r", IMU);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-// PDEM Functions
-void pdem_function_a(void)
-{
-    print_string("\n\rExecuting PDEM Function A\n\r", PDEM);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void pdem_function_b(void)
-{
-    print_string("\n\rExecuting PDEM Function B\n\r", PDEM);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void pdem_function_c(void)
-{
-    print_string("\n\rExecuting PDEM Function C\n\r", PDEM);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-// NODE Functions
-void node_function_a(void)
-{
-    print_string("\n\rExecuting NODE Function A\n\r", Node);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void node_function_b(void)
-{
-    print_string("\n\rExecuting NODE Function B\n\r", Node);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void node_function_c(void)
-{
-    print_string("\n\rExecuting NODE Function C\n\r", Node);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-// THRUST Functions
-void thruster_function_a(void)
-{
-    print_string("\n\rExecuting THRUST Function A\n\r", Thrusters);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void thruster_function_b(void)
-{
-    print_string("\n\rExecuting THRUST Function B\n\r", Thrusters);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void thruster_function_c(void)
-{
-    print_string("\n\rExecuting THRUST Function C\n\r", Thrusters);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-// EXPANDER Functions
-void expander_function_a(void)
-{
-    print_string("\n\rExecuting EXPANDER Function A\n\r", Expander);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void expander_function_b(void)
-{
-    print_string("\n\rExecuting EXPANDER Function B\n\r", Expander);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void expander_function_c(void)
-{
-    print_string("\n\rExecuting EXPANDER Function C\n\r", Expander);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-// RANDOM Functions
-void random_function_a(void)
-{
-    print_string("\n\rExecuting RANDOM Function A\n\r", Node);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void random_function_b(void)
-{
-    print_string("\n\rExecuting RANDOM Function B\n\r", Node);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-void random_function_c(void)
-{
-    print_string("\n\rExecuting RANDOM Function C\n\r", Node);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-// SDAS Functions
-void sdas_function_a(void)
-{
-    print_string("\n\rExecuting SDAS Function A\n\r", SDAS);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-void sdas_function_b(void)
-{
-    print_string("\n\rExecuting SDAS Function B\n\r", SDAS);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}
-
-void sdas_function_c(void)
-{
-    print_string("\n\rExecuting SDAS Function C\n\r", SDAS);
-    print_string("Press any key...\n\r", Node);
-    get_input();
-}

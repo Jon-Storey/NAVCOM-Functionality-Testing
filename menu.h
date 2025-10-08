@@ -17,24 +17,21 @@
  * @note Call menu_init() during system startup to initialise menu system
  */
 
-
 #ifndef MENU_H_
 #define MENU_H_
 
 #include <stdint.h>
 #include <stdbool.h>
-
-
 #include <stdint.h>
 
 
-
+// Structure for menu items
 typedef struct
 {
-    const char *description;        // Pointer to string (no copying)
-    void (*function_ptr)(void);     // Function pointer
+    const char *description;
+    void (*function_ptr)(void *param);  // Function pointer with parameter
+    void *param;
 } menu_item;
-
 
 
 // Structure for menu list
@@ -46,7 +43,6 @@ typedef struct
 } menu_list;
 
 
-
 // Structure for menu state
 typedef struct
 {
@@ -54,6 +50,9 @@ typedef struct
     uint8_t selected_index;         // Selected item index
     uint8_t menu_level;             // 0 = main, 1 = submenu
 } menu_state;
+
+
+
 
 // Public function prototypes
 void init_menu_system(void);
@@ -66,66 +65,38 @@ void menu_down(void);
 void menu_select(void);
 void menu_back(void);
 
-
 // Utility functions
 void print_number(uint8_t num);
 char get_input(void);
 
-// Menu transition function prototypes
-void show_usbl_menu(void);
-void show_fcpu_menu(void);
-void show_imu_menu(void);
-void show_pdem_menu(void);
-void show_node_menu(void);
-void show_thruster_menu(void);
+
+
+
+
+
+// USART function prototypes
+void show_usart_menu(void);
+void usart_function_a(void *param);
+void usart_function_b(void *param);
+void usart_function_c(void *param);
+
+// Ethernet function prototypes
+void show_ethernet_menu(void);
+void ethernet_function_a(void *param);
+
+
+// Expander function prototypes
 void show_expander_menu(void);
-void show_sdas_menu(void);
-void show_random_menu(void);
+void expander_function_a(void *param);
+void expander_function_b(void *param);
 
-// USBL function prototypes
-void usbl_function_a(void);
-void usbl_function_b(void);
-void usbl_function_c(void);
 
-// FCPU function prototypes
-void fcpu_function_a(void);
-void fcpu_function_b(void);
-void fcpu_function_c(void);
+// Buzzer function prototypes
+void show_buzzer_menu(void);
+void buzzer_function_a(void *param);
+void buzzer_function_b(void *param);
 
-// IMU function prototypes
-void imu_function_a(void);
-void imu_function_b(void);
-void imu_function_c(void);
 
-// PDEM function prototypes
-void pdem_function_a(void);
-void pdem_function_b(void);
-void pdem_function_c(void);
-
-// NODE function prototypes
-void node_function_a(void);
-void node_function_b(void);
-void node_function_c(void);
-
-// THRUST function prototypes
-void thruster_function_a(void);
-void thruster_function_b(void);
-void thruster_function_c(void);
-
-// EXPANDER function prototypes
-void expander_function_a(void);
-void expander_function_b(void);
-void expander_function_c(void);
-
-// SDAS function prototypes
-void sdas_function_a(void);
-void sdas_function_b(void);
-void sdas_function_c(void);
-
-// RANDOM function prototypes
-void random_function_a(void);
-void random_function_b(void);
-void random_function_c(void);
 
 
 extern menu_state state;

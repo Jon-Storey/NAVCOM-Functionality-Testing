@@ -1271,6 +1271,8 @@ void binaryToAsciiString(uint8_t value, char *asciiStr)
 
 void USART_Test_Cycle(void)
 {
+
+
   GPIO_PinOutSet(gpioPortC,8);      //set IMU rs485 driver into tx, confirmed working
   GPIO_PinOutSet(gpioPortE,4);      //set THRUSTER rs485 driver into tx, confirmed working
     while(1)
@@ -1280,8 +1282,23 @@ void USART_Test_Cycle(void)
           print_string("hello from PDEM \n\r", PDEM);           // check works - RS232 tested, need routing to connector though!
           print_string("hello from SDAS \n\r", SDAS);           // check works - confirmed over RS232, no fix required
           print_string("hello from Thruster \n\r", Thrusters ); // check works
-          print_string("hello from FCPU \n\r", FCPU);           // check works !no routing
-          print_string("hello from USBL \n\r", USBL);           // check works ! no routing
+          print_string("hello from FCPU \n\r", FCPU);           // check works
+          print_string("hello from USBL \n\r", USBL);           // check works
+
+   //       print_string("hello from External Pressure \n\r", USBL);
+  //        print_string("hello from Antenna \n\r", USBL);           //
+  //        print_string("hello from PLE_0 \n\r", USBL);           //
+
+  //        print_string("hello from PLC_2 \n\r", USBL);           //
+  //        print_string("hello from PLD_0 \n\r", USBL);           //
+  //        print_string("hello from PLD_1 \n\r", USBL);           //
+  //        print_string("hello from PLD_2 \n\r", USBL);           //
+
+  //        print_string("hello from PLA_0 \n\r", USBL);           //
+  //        print_string("hello from PLB_0 \n\r", USBL);           //
+  //        print_string("hello from PLC_0 \n\r", USBL);           //
+  //        print_string("hello from PLC_1 \n\r", USBL);           //
+
     }
 }
 

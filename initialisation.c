@@ -96,11 +96,31 @@ void Initialise_Node(void)
      * CLOCK TREE CONFIGURATION
      * Enable clocks for all required peripherals
      *========================================================================*/
+
+
+
+    CMU_HFXOInit_TypeDef hfxoInit = CMU_HFXOINIT_DEFAULT;
+
+    // For ABM8-50MHz with 8pF load cap, try these values
+    hfxoInit.ctuneStartup = 16;
+    hfxoInit.ctuneSteadyState = 16;
+
+    CMU_HFXOInit(&hfxoInit);
+    SystemHFXOClockSet(50000000UL);   // Important: set frequency first!
+    CMU_OscillatorEnable(cmuOsc_HFXO, true, true);
+    CMU_ClockSelectSet(cmuClock_HF, cmuSelect_HFXO);
+
+
+   // CMU_OscillatorEnable(cmuOsc_HFRCO, false, false);         // Optionally disable the internal RC oscillator to save power
+
+
     CMU_ClockEnable(cmuClock_HFPER, true);      // High Frequency Peripheral Clock
     CMU_ClockEnable(cmuClock_GPIO, true);       // GPIO clock
     CMU_ClockEnable(cmuClock_I2C0, true);       // I2C Clock
  // CMU_ClockEnable(cmuClock_TIMER0, true);     // set up in the timer init function
  // CMU_ClockEnable(cmuClock_TIMER1, true);
+    CMU_ClockEnable(cmuClock_TIMER2, true);
+
 
     // USART and UART clocks
     CMU_ClockEnable(cmuClock_USART0, true);     // IMU interface
@@ -136,7 +156,6 @@ void Initialise_Node(void)
     GPIO_PinModeSet(gpioPortE, 4, gpioModePushPull, 1);     // RS485 RTS control
 
     // Expander - USART4 LOC0 (SPI mode)
-    // GPIO_PinModeSet(gpioPortB, 8, gpioModePushPull, 1);     // MISo - change to inpout later
     GPIO_PinModeSet(gpioPortB, 8, gpioModeWiredAndAlternatePullUpFilter, 1);        // MISO
     GPIO_PinModeSet(gpioPortB, 7, gpioModePushPullAlternate, 1);     // MOSI
     GPIO_PinModeSet(gpioPortC, 4, gpioModePushPullAlternate, 1);     // CLK
@@ -329,7 +348,7 @@ void Initialise_Node(void)
      *========================================================================*/
     setupTimer0();          // Hardware timer initialization for uS control
     setupTimer1();          // Hardware timer initialization for mS control
-
+    buzzer_init();
     usart_init();           // All USART/UART interfaces
    // initI2C();              // I2C interface for sensor communication
  //   MAX14830_Init();

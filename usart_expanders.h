@@ -229,7 +229,7 @@ uint8_t MAX14830_UART1_IsReady(void);
  * @brief Send a character through MAX14830 UART1
  * @param character Character to send (0x00-0xFF)
  */
-void MAX14830_UART1_SendChar(char character);
+void MAX14830_SendString(uint8_t expander, uint8_t uart_channel, const char* str);
 
 /**
  * @brief Receive a character from MAX14830 UART1
@@ -241,7 +241,7 @@ uint8_t MAX14830_UART1_ReceiveChar(void);
  * @brief Send a null-terminated string through MAX14830 UART1
  * @param str Pointer to null-terminated string to send
  */
-void MAX14830_UART1_SendString(const char* str);
+void MAX14830_SendString(uint8_t expander, uint8_t uart_channel, const char* str);
 
 /** @} */
 

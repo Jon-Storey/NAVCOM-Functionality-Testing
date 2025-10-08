@@ -28,6 +28,7 @@ toolchain_settings: []
 component:
 - {id: EFM32GG11B420F2048GQ100}
 - {id: device_init}
+- {id: emlib_adc}
 - {id: emlib_i2c}
 - {id: sl_system}
 define:

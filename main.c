@@ -76,6 +76,7 @@ NodeConfiguration NodeConfig = {
     .PLD_GPIO_0 = 0,
     .PLE_GPIO_0 = 0
 
+
 };
 
 int main(void)
@@ -85,14 +86,50 @@ int main(void)
   pNodeConfig = &NodeConfig;        // point it a NodeConfig STructure
 
 
+   init_menu_system();
+
+   while(1)
+   {
+       run_menu_system();
+   }
+
+
+
+
+
+
+
+ /*//REQURIED FOR ETHERNET SWITCH COMMS
+   Set_Ethernet_Switch_Power_State(Off, pNodeConfig);         // regardless of current situation, turn off power to the chip
+  hw_timer1_ms(100);                                          // wait for the chip to power down and settle
+  Set_Ethernet_Switch_Power_State(On, pNodeConfig);          // re-apply power to the chip
+  hw_timer1_ms(10);                                          // wait 5ms after powering on chip
+  Set_Ethernet_Switch_Reset_State(Off, pNodeConfig);                // Set Reset low, which resets chip
+  hw_timer1_ms(150);                                         // wait 15 ms with RESET low for warm reset
+  Set_Ethernet_Switch_Reset_State(On, pNodeConfig);                 // Set Reset high. Strap on values are read on the rising edge (includes a reading time)
+  hw_timer1_ms(150);
+
+ // Set_RS232_A_Power_State(On, pNodeConfig);
+ // Set_RS232_B_Power_State(On, pNodeConfig);
+  hw_timer1_ms(3000);
+
+
      while(1)
     {
-         init_menu_system();
-
-           print_string("\n\r=== NAVCOM Menu System ===\n\r", Node);
-           run_menu_system();
-     return 0;
+         //USART_Test_Cycle();
+         //  init_menu_system();
+           print_string("\n\r=== ETHERNET TEST \n\r", Node);
+           hw_timer1_ms(1000);
+         //  run_menu_system();
+         //return 0;
     }
+*/
+
+
+
+
+}
+/*
 
 
 
@@ -100,52 +137,6 @@ int main(void)
 
 
 
-
-  //enable the core LDOs and drivers
-  Set_5V_Power_State(On, pNodeConfig);
-  hw_timer1_ms(100);
-  Set_3V_Power_State(On, pNodeConfig);
-  hw_timer1_ms(100);
-  Set_RS232_A_Power_State(On, pNodeConfig);
-  Set_RS232_B_Power_State(On, pNodeConfig);
-
-
-
-
-
-  Set_Expander_A_Power_State(On, pNodeConfig );         //turn on all expanders, power required for high z state
-  Set_Expander_B_Power_State(On, pNodeConfig );
-  Set_Expander_C_Power_State(On, pNodeConfig );
-
-  Set_Expander_A_CS_State(Deselected);
-  Set_Expander_B_CS_State(Deselected);
-  Set_Expander_C_CS_State(Deselected);                  // deselect the two unused expanders
-
-
- // Set_Ethernet_Switch_Power_State(On, pNodeConfig );
-
-  GPIO_PinOutSet(gpioPortD, 3);                           // Pull reset high EXP3 = uSART b = pin 49 on efm
-  GPIO_PinOutSet(gpioPortD, 2);                           // Pull reset high usart A
-  GPIO_PinOutSet(gpioPortD, 4);
-
-
-
-  hw_timer1_ms(100);
-
-  MAX14830_UART_Init(EXPANDER_A);
-  MAX14830_UART_Init(EXPANDER_B);
-  MAX14830_UART_Init(EXPANDER_C);
-
-
-
-//  hw_timer1_ms(100);
-
-  while(1)
-    {
-      hw_timer1_ms(100);
-     MAX14830_UART1_SendString("fuck it");
-      print_string("x", Node);
-    }
 
   char input = 0;
 
@@ -178,78 +169,7 @@ int main(void)
 
 
 
-  menu_init();
- // input = USART_ReceiveChar(Node);
- // menu_process_input(input);
-  //handle_main_menu(input);
-
-
-
-
-  while(1)
-  {
-      input = USART_ReceiveChar(USART2);
-      menu_process_input(input, pNodeConfig);
-      print_node_modestate(pNodeConfig);
-
-   }
 }
-
-
-  // Send a character
-
-
-
-
-
-/*
-  char input = 0;
-    Initilise_Node ();
-    initI2C();
-    uint8_t result;
-    while(1)
-    {
-        print_string("1 send who am i?   \n\r" , Node);
-        input = USART_ReceiveChar(USART2);
-
-        switch (input)
-        {
-          case '1':
-
-           i2cStartReadByte();
-
-           while (!i2cIsTransferDone());
-
-
-           print_string("tx done\n\r" , Node);
-
-           uint8_t result = i2cGetLastByte();
-
-           binaryToAsciiHex(result, asciiStr);
-           print_string("Read: ", Node);
-           print_string(asciiStr, Node);
-           print_string("\n\r", Node);
-
-            break;
-        }
-
-        input = 0;
-
-
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,6 +1,7 @@
-menu.o: ../menu.c \
+gecko_sdk_4.4.6/platform/emlib/src/em_adc.o: \
+ C:/Users/JonathanStorey/SimplicityStudio/SDKs/gecko_sdk_2/platform/emlib/src/em_adc.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h \
+ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_adc.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\cmsis\core\include\core_cm4.h \
@@ -70,6 +71,7 @@ menu.o: ../menu.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_ports.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_pins.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h \
+ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_bus.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core_generic.h \
@@ -77,13 +79,13 @@ menu.o: ../menu.c \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h \
  C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h \
  C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/emlib_core_debug_config.h \
+ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu_compat.h \
+ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h \
  c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_enum.h \
- ../defines.h ../helpers.h ../usart.h \
- c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_usart.h \
- ../i2c.h ../menu.h ../ethernet_switch.h ../hw_timer.h \
- ../usart_expanders.h ../buzzer.h
+ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_status.h \
+ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\sli_em_cmu.h
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\toolchain\inc\sl_gcc_preinclude.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h:
+c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_adc.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\em_device.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b420f2048gq100.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\cmsis\core\include\core_cm4.h:
@@ -153,6 +155,7 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\silico
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_ports.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\device\siliconlabs\efm32gg11b\include\efm32gg11b_af_pins.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h:
+c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_bus.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_core_generic.h:
@@ -160,14 +163,8 @@ c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_assert.h:
 C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\autogen/sl_component_catalog.h:
 C:\Users\JonathanStorey\SimplicityStudio\v5_workspace\NAVCOM_Functionality_Testing\config/emlib_core_debug_config.h:
+c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_cmu_compat.h:
+c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_gpio.h:
 c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_enum.h:
-../defines.h:
-../helpers.h:
-../usart.h:
-c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\em_usart.h:
-../i2c.h:
-../menu.h:
-../ethernet_switch.h:
-../hw_timer.h:
-../usart_expanders.h:
-../buzzer.h:
+c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\common\inc\sl_status.h:
+c:\users\jonathanstorey\simplicitystudio\sdks\gecko_sdk_2\platform\emlib\inc\sli_em_cmu.h:

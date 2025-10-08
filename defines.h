@@ -166,7 +166,7 @@ typedef enum {
 
 
 
-
+#define EFM32_HFXO_FREQ (50000000UL)
 
 
 
