@@ -131,7 +131,7 @@ static const menu_item usart_items[] =
 {
     {"Enable all the DCDC and LDOS",    usart_function_a,     &NodeConfig},
     {"USART loop all",                  usart_function_b,     &NodeConfig},
-    {"Send Hello to PLA1",              usart_function_c,     &NodeConfig}
+    {"Send Hello to PLA1",              usart_function_c,     &NodeConfig},
 
 
 };
@@ -139,7 +139,7 @@ static const menu_item usart_items[] =
 static const menu_list usart_menu =
 {
     usart_items,     // Pointer to menu items array
-    7,              // Number of items in menu
+    4,              // Number of items in menu
     "USART Functions" // Menu title displayed to user
 };
 
