@@ -138,9 +138,9 @@ static const menu_item usart_items[] =
 
 static const menu_list usart_menu =
 {
-    usart_items,     // Pointer to menu items array
-    4,              // Number of items in menu
-    "USART Functions" // Menu title displayed to user
+    usart_items,        // Pointer to menu items array
+    4,                  // Number of items in menu
+    "USART Functions"   // Menu title displayed to user
 };
 
 void show_usart_menu(void)
